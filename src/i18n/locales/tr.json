@@ -90,7 +90,23 @@
     "noAttachments": "Henüz ek yok",
     "fileUploaded": "Dosya başarıyla yüklendi",
     "downloadFile": "İndir",
-    "deleteFile": "Sil"
+    "deleteFile": "Sil",
+    "dependencies": {
+      "title": "Bağımlılıklar",
+      "addDependency": "Bağımlılık Ekle",
+      "selectTask": "Görev seçin",
+      "blockedBy": "Engelleyen",
+      "blocking": "Engellenen",
+      "noDependencies": "Bağımlılık yok",
+      "notBlocking": "Hiçbir görevi engellemiyor",
+      "dependencyAdded": "Bağımlılık eklendi",
+      "dependencyRemoved": "Bağımlılık kaldırıldı",
+      "alreadyExists": "Bu bağımlılık zaten mevcut",
+      "removeDependency": "Bağımlılığı Kaldır",
+      "removeDependencyConfirm": "Bu bağımlılığı kaldırmak istediğinizden emin misiniz?",
+      "blockedWarning": "Bu görev engellendi",
+      "blockedWarningDescription": "Buna başlamadan önce engelleyen görevleri tamamlayın"
+    }
   },
   "taskStatus": {
     "Backlog": "Beklemede",

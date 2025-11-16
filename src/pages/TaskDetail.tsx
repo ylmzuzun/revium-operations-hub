@@ -14,11 +14,14 @@ import { toast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 import { format } from "date-fns";
 import { AttachmentSection } from "@/components/tasks/AttachmentSection";
+import { DependenciesSection } from "@/components/tasks/DependenciesSection";
+import { useAuth } from "@/contexts/AuthContext";
 
 const TaskDetail = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [task, setTask] = useState<any>(null);
   const [comments, setComments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -289,6 +292,16 @@ const TaskDetail = () => {
           </Card>
 
           <AttachmentSection taskId={id!} />
+
+          <DependenciesSection
+            taskId={id!}
+            canEdit={
+              user?.id === task?.created_by ||
+              user?.id === task?.assignee_id ||
+              currentUser?.global_role === "Admin" ||
+              currentUser?.global_role === "Manager"
+            }
+          />
         </div>
       </div>
     </div>

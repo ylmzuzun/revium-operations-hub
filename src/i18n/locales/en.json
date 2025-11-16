@@ -90,7 +90,23 @@
     "noAttachments": "No attachments yet",
     "fileUploaded": "File uploaded successfully",
     "downloadFile": "Download",
-    "deleteFile": "Delete"
+    "deleteFile": "Delete",
+    "dependencies": {
+      "title": "Dependencies",
+      "addDependency": "Add Dependency",
+      "selectTask": "Select a task",
+      "blockedBy": "Blocked By",
+      "blocking": "Blocking",
+      "noDependencies": "No dependencies",
+      "notBlocking": "Not blocking any tasks",
+      "dependencyAdded": "Dependency added",
+      "dependencyRemoved": "Dependency removed",
+      "alreadyExists": "This dependency already exists",
+      "removeDependency": "Remove Dependency",
+      "removeDependencyConfirm": "Are you sure you want to remove this dependency?",
+      "blockedWarning": "This task is blocked",
+      "blockedWarningDescription": "Complete the blocking tasks before starting this one"
+    }
   },
   "taskStatus": {
     "Backlog": "Backlog",
