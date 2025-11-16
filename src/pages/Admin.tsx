@@ -58,6 +58,18 @@ const Admin = () => {
       .order("created_at", { ascending: false });
 
     if (error) {
+      // Check if error is due to RLS policy (unauthorized access)
+      if (error.code === 'PGRST301' || error.message?.includes('row-level security')) {
+        toast({
+          title: t("common.error"),
+          description: "You don't have permission to access this page.",
+          variant: "destructive",
+        });
+        setUsers([]);
+        setLoading(false);
+        return;
+      }
+      
       toast({ title: t("common.error"), description: error.message, variant: "destructive" });
     } else {
       setUsers(data || []);
@@ -120,20 +132,6 @@ const Admin = () => {
     setAlertAction(action);
     setAlertOpen(true);
   };
-
-  const isAuthorized = profile?.global_role === "Admin" || profile?.global_role === "Manager";
-
-  if (!isAuthorized) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <Card>
-          <CardContent className="p-8">
-            <p className="text-muted-foreground">You don't have permission to access this page.</p>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   const activeUsersCount = users.filter((u) => u.is_active).length;
 
