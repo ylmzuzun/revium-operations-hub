@@ -15,9 +15,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { NotificationPopover } from "./notifications/NotificationPopover";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 export function AppHeader() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -38,7 +40,7 @@ export function AppHeader() {
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search tasks, projects, users..."
+            placeholder={t("common.searchPlaceholder")}
             className="pl-8"
           />
         </div>
@@ -55,17 +57,17 @@ export function AppHeader() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{t("common.myAccount")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate("/profile")}>
-              Profile
+              {t("common.profile")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/settings")}>
-              Settings
+              {t("common.settings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>
-              Sign Out
+              {t("auth.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

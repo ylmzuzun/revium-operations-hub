@@ -9,10 +9,12 @@ import { signIn, signUp } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { Building2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const Auth = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
   // Redirect if already logged in
@@ -97,7 +99,7 @@ const Auth = () => {
                   <Input
                     id="signin-email"
                     type="email"
-                    placeholder="name@company.com"
+                    placeholder={t("auth.emailPlaceholder")}
                     value={signInData.email}
                     onChange={(e) =>
                       setSignInData({ ...signInData, email: e.target.value })
@@ -131,7 +133,7 @@ const Auth = () => {
                     <Input
                       id="signup-name"
                       type="text"
-                      placeholder="John"
+                      placeholder={t("auth.namePlaceholder")}
                       value={signUpData.name}
                       onChange={(e) =>
                         setSignUpData({ ...signUpData, name: e.target.value })
@@ -144,7 +146,7 @@ const Auth = () => {
                     <Input
                       id="signup-surname"
                       type="text"
-                      placeholder="Doe"
+                      placeholder={t("auth.surnamePlaceholder")}
                       value={signUpData.surname}
                       onChange={(e) =>
                         setSignUpData({ ...signUpData, surname: e.target.value })
@@ -158,7 +160,7 @@ const Auth = () => {
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder="name@company.com"
+                    placeholder={t("auth.emailPlaceholder")}
                     value={signUpData.email}
                     onChange={(e) =>
                       setSignUpData({ ...signUpData, email: e.target.value })

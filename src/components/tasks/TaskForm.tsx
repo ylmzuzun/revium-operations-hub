@@ -19,6 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Sparkles, X } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Database } from "@/integrations/supabase/types";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type TaskType = Database["public"]["Enums"]["task_type"];
 type TaskStatus = Database["public"]["Enums"]["task_status"];
@@ -48,6 +49,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
   const [suggestions, setSuggestions] = useState<Profile[]>([]);
   const [skillInput, setSkillInput] = useState("");
   const [skillTags, setSkillTags] = useState<string[]>([]);
+  const [sendEmail, setSendEmail] = useState(true);
 
   const title = watch("title");
   const description = watch("description");
@@ -207,10 +209,10 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
 
           <div>
             <Label htmlFor="project_id">{t("tasks.project")}</Label>
-            <Select onValueChange={(v) => setValue("project_id", v)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select project" />
-              </SelectTrigger>
+          <Select onValueChange={(v) => setValue("project_id", v)}>
+            <SelectTrigger>
+              <SelectValue placeholder={t("common.selectProject")} />
+            </SelectTrigger>
               <SelectContent>
                 {projects.map((p) => (
                   <SelectItem key={p.id} value={p.id}>
@@ -246,7 +248,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
               value={skillInput}
               onChange={(e) => setSkillInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkillTag())}
-              placeholder="Add skill tag..."
+              placeholder={t("common.addSkillPlaceholder")}
             />
             <Button type="button" onClick={addSkillTag}>
               Add
@@ -327,6 +329,17 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
               </CardContent>
             </Card>
           )}
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox 
+            id="sendEmail" 
+            checked={sendEmail}
+            onCheckedChange={(checked) => setSendEmail(checked as boolean)}
+          />
+          <Label htmlFor="sendEmail" className="text-sm font-normal cursor-pointer">
+            {t("tasks.sendEmailNotification")}
+          </Label>
         </div>
       </div>
 
