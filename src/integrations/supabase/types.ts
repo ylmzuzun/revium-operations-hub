@@ -716,6 +716,30 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          assigned_at: string
+          assigned_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -735,8 +759,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      has_role: { Args: { _role: string; _user_id: string }; Returns: boolean }
     }
     Enums: {
+      app_role: "Admin" | "Manager" | "TeamLead" | "Member" | "Viewer"
       approval_level: "LEVEL_1" | "LEVEL_2" | "LEVEL_3"
       approval_status: "PENDING" | "APPROVED" | "REJECTED"
       department_type:
@@ -894,6 +920,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["Admin", "Manager", "TeamLead", "Member", "Viewer"],
       approval_level: ["LEVEL_1", "LEVEL_2", "LEVEL_3"],
       approval_status: ["PENDING", "APPROVED", "REJECTED"],
       department_type: [
