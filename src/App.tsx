@@ -23,6 +23,7 @@ import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Logs from "./pages/Logs";
+import TaskPool from "./pages/TaskPool";
 import "./i18n/config";
 
 const queryClient = new QueryClient();
@@ -182,6 +183,16 @@ const App = () => (
                 <ProtectedRoute>
                   <MainLayout>
                     <Logs />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/task-pool"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <TaskPool />
                   </MainLayout>
                 </ProtectedRoute>
               }

@@ -356,6 +356,10 @@
     "pleaseEnterTaskTitle": "Lütfen bir görev başlığı girin",
     "taskCreatedSuccessfully": "Görev başarıyla oluşturuldu",
     "taskUpdatedSuccessfully": "Görev başarıyla güncellendi",
+    "taskClaimed": "Görev başarıyla alındı",
+    "view": "Görüntüle",
+    "selected": "seçili",
+    "noResults": "Sonuç bulunamadı",
     "profileUpdatedSuccessfully": "Profil başarıyla güncellendi",
     "projectCreatedSuccessfully": "Proje başarıyla oluşturuldu",
     "projectUpdatedSuccessfully": "Proje başarıyla güncellendi",
@@ -391,6 +395,10 @@
     "before": "Önce",
     "after": "Sonra",
     "metadata": "Meta Veri"
+  },
+  "taskPool": {
+    "subtitle": "Talep edilmeyi bekleyen mevcut görevler",
+    "noAvailableTasks": "Havuzda görev yok"
   },
   "reports": {
     "title": "Raporlar",

@@ -57,6 +57,13 @@ export type Database = {
             foreignKeyName: "activity_logs_task_id_fkey"
             columns: ["task_id"]
             isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_logs_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
@@ -94,6 +101,13 @@ export type Database = {
           uploaded_by?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "attachments_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "attachments_task_id_fkey"
             columns: ["task_id"]
@@ -150,6 +164,13 @@ export type Database = {
             foreignKeyName: "comments_task_id_fkey"
             columns: ["task_id"]
             isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
@@ -187,6 +208,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "notifications_related_task_id_fkey"
+            columns: ["related_task_id"]
+            isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "notifications_related_task_id_fkey"
             columns: ["related_task_id"]
@@ -480,6 +508,13 @@ export type Database = {
             foreignKeyName: "task_approvals_task_id_fkey"
             columns: ["task_id"]
             isOneToOne: true
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_approvals_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: true
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
@@ -488,6 +523,59 @@ export type Database = {
             columns: ["workflow_id"]
             isOneToOne: false
             referencedRelation: "task_approval_workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      task_assignees: {
+        Row: {
+          assigned_at: string
+          assigned_by: string | null
+          assignee_id: string
+          id: string
+          task_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_by?: string | null
+          assignee_id: string
+          id?: string
+          task_id: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_by?: string | null
+          assignee_id?: string
+          id?: string
+          task_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_assignees_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_assignees_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_assignees_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_assignees_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
         ]
@@ -526,7 +614,21 @@ export type Database = {
             foreignKeyName: "task_dependencies_depends_on_task_id_fkey"
             columns: ["depends_on_task_id"]
             isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_dependencies_depends_on_task_id_fkey"
+            columns: ["depends_on_task_id"]
+            isOneToOne: false
             referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_dependencies_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "task_pool"
             referencedColumns: ["id"]
           },
           {
@@ -558,6 +660,13 @@ export type Database = {
           team_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "task_teams_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "task_teams_task_id_fkey"
             columns: ["task_id"]
@@ -598,6 +707,13 @@ export type Database = {
             foreignKeyName: "task_watchers_task_id_fkey"
             columns: ["task_id"]
             isOneToOne: false
+            referencedRelation: "task_pool"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_watchers_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
             referencedRelation: "tasks"
             referencedColumns: ["id"]
           },
@@ -614,6 +730,7 @@ export type Database = {
         Row: {
           actual_hours: number | null
           assignee_id: string | null
+          claimed_by: string | null
           created_at: string
           created_by: string
           description: string | null
@@ -632,6 +749,7 @@ export type Database = {
         Insert: {
           actual_hours?: number | null
           assignee_id?: string | null
+          claimed_by?: string | null
           created_at?: string
           created_by: string
           description?: string | null
@@ -650,6 +768,7 @@ export type Database = {
         Update: {
           actual_hours?: number | null
           assignee_id?: string | null
+          claimed_by?: string | null
           created_at?: string
           created_by?: string
           description?: string | null
@@ -669,6 +788,13 @@ export type Database = {
           {
             foreignKeyName: "tasks_assignee_id_fkey"
             columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_claimed_by_fkey"
+            columns: ["claimed_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -786,7 +912,95 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      task_pool: {
+        Row: {
+          actual_hours: number | null
+          assignee_id: string | null
+          claimed_by: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          estimate_hours: number | null
+          id: string | null
+          priority: Database["public"]["Enums"]["task_priority"] | null
+          project_id: string | null
+          skill_tags: string[] | null
+          start_date: string | null
+          status: Database["public"]["Enums"]["task_status"] | null
+          title: string | null
+          type: Database["public"]["Enums"]["task_type"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          actual_hours?: number | null
+          assignee_id?: string | null
+          claimed_by?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          estimate_hours?: number | null
+          id?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"] | null
+          project_id?: string | null
+          skill_tags?: string[] | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["task_status"] | null
+          title?: string | null
+          type?: Database["public"]["Enums"]["task_type"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          actual_hours?: number | null
+          assignee_id?: string | null
+          claimed_by?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          estimate_hours?: number | null
+          id?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"] | null
+          project_id?: string | null
+          skill_tags?: string[] | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["task_status"] | null
+          title?: string | null
+          type?: Database["public"]["Enums"]["task_type"] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_claimed_by_fkey"
+            columns: ["claimed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       can_user_approve_task: {
