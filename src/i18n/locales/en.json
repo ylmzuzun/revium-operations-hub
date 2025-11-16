@@ -107,6 +107,34 @@
       "removeDependencyConfirm": "Are you sure you want to remove this dependency?",
       "blockedWarning": "This task is blocked",
       "blockedWarningDescription": "Complete the blocking tasks before starting this one"
+    },
+    "approval": {
+      "title": "Approval Workflow",
+      "requestApproval": "Request Approval",
+      "requestDescription": "Submit this task for approval. Select the number of approval levels required.",
+      "approvalLevels": "Number of Approval Levels",
+      "level": "level",
+      "levels": "levels",
+      "level1": "Level 1",
+      "level2": "Level 2",
+      "level3": "Level 3",
+      "notes": "Notes",
+      "notesPlaceholder": "Add any notes for the approvers...",
+      "submit": "Submit for Approval",
+      "requestSubmitted": "Approval request submitted successfully",
+      "notRequested": "This task has not been submitted for approval yet.",
+      "cannotRequest": "Only task creator or assignee can request approval.",
+      "requestedBy": "Requested by",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "approve": "Approve",
+      "reject": "Reject",
+      "approveDescription": "Approve this task to move it to the next approval level or mark it as complete.",
+      "rejectDescription": "Reject this task to send it back for revisions.",
+      "comments": "Comments",
+      "commentsPlaceholder": "Add comments about your decision...",
+      "history": "Approval History",
+      "waitingForApproval": "Waiting for approval from authorized users."
     }
   },
   "taskStatus": {
@@ -271,7 +299,8 @@
     "save": "Save",
     "saving": "Saving...",
     "cancel": "Cancel",
-    "uploading": "Uploading..."
+    "uploading": "Uploading...",
+    "optional": "optional"
   },
   "reports": {
     "title": "Reports",

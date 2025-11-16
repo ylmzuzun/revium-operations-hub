@@ -15,6 +15,7 @@ import ReactMarkdown from "react-markdown";
 import { format } from "date-fns";
 import { AttachmentSection } from "@/components/tasks/AttachmentSection";
 import { DependenciesSection } from "@/components/tasks/DependenciesSection";
+import { ApprovalSection } from "@/components/tasks/ApprovalSection";
 import { useAuth } from "@/contexts/AuthContext";
 
 const TaskDetail = () => {
@@ -292,6 +293,15 @@ const TaskDetail = () => {
           </Card>
 
           <AttachmentSection taskId={id!} />
+
+          <ApprovalSection
+            taskId={id!}
+            taskStatus={task.status}
+            canRequestApproval={
+              user?.id === task?.created_by ||
+              user?.id === task?.assignee_id
+            }
+          />
 
           <DependenciesSection
             taskId={id!}

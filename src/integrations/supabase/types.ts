@@ -301,6 +301,153 @@ export type Database = {
           },
         ]
       }
+      task_approval_actions: {
+        Row: {
+          actioned_at: string
+          approval_id: string
+          approver_id: string
+          comments: string | null
+          id: string
+          level: Database["public"]["Enums"]["approval_level"]
+          status: Database["public"]["Enums"]["approval_status"]
+        }
+        Insert: {
+          actioned_at?: string
+          approval_id: string
+          approver_id: string
+          comments?: string | null
+          id?: string
+          level: Database["public"]["Enums"]["approval_level"]
+          status: Database["public"]["Enums"]["approval_status"]
+        }
+        Update: {
+          actioned_at?: string
+          approval_id?: string
+          approver_id?: string
+          comments?: string | null
+          id?: string
+          level?: Database["public"]["Enums"]["approval_level"]
+          status?: Database["public"]["Enums"]["approval_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_approval_actions_approval_id_fkey"
+            columns: ["approval_id"]
+            isOneToOne: false
+            referencedRelation: "task_approvals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_approval_actions_approver_id_fkey"
+            columns: ["approver_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      task_approval_workflows: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          level_1_role: string | null
+          level_2_role: string | null
+          level_3_role: string | null
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          level_1_role?: string | null
+          level_2_role?: string | null
+          level_3_role?: string | null
+          name: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          level_1_role?: string | null
+          level_2_role?: string | null
+          level_3_role?: string | null
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_approval_workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      task_approvals: {
+        Row: {
+          completed_at: string | null
+          current_level: Database["public"]["Enums"]["approval_level"]
+          final_status: Database["public"]["Enums"]["approval_status"] | null
+          id: string
+          is_complete: boolean
+          notes: string | null
+          requested_at: string
+          requested_by: string
+          task_id: string
+          workflow_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          current_level?: Database["public"]["Enums"]["approval_level"]
+          final_status?: Database["public"]["Enums"]["approval_status"] | null
+          id?: string
+          is_complete?: boolean
+          notes?: string | null
+          requested_at?: string
+          requested_by: string
+          task_id: string
+          workflow_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          current_level?: Database["public"]["Enums"]["approval_level"]
+          final_status?: Database["public"]["Enums"]["approval_status"] | null
+          id?: string
+          is_complete?: boolean
+          notes?: string | null
+          requested_at?: string
+          requested_by?: string
+          task_id?: string
+          workflow_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_approvals_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_approvals_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: true
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_approvals_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "task_approval_workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       task_dependencies: {
         Row: {
           created_at: string
@@ -574,6 +721,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_user_approve_task: {
+        Args: { p_approval_id: string; p_user_id: string }
+        Returns: boolean
+      }
       create_notification: {
         Args: {
           p_message: string
@@ -586,6 +737,8 @@ export type Database = {
       }
     }
     Enums: {
+      approval_level: "LEVEL_1" | "LEVEL_2" | "LEVEL_3"
+      approval_status: "PENDING" | "APPROVED" | "REJECTED"
       department_type:
         | "Management"
         | "Mechanical"
@@ -741,6 +894,8 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      approval_level: ["LEVEL_1", "LEVEL_2", "LEVEL_3"],
+      approval_status: ["PENDING", "APPROVED", "REJECTED"],
       department_type: [
         "Management",
         "Mechanical",
