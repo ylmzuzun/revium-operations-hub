@@ -10,11 +10,15 @@ import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import MyWork from "./pages/MyWork";
 import Tasks from "./pages/Tasks";
+import TaskNew from "./pages/TaskNew";
+import TaskDetail from "./pages/TaskDetail";
 import Projects from "./pages/Projects";
 import Teams from "./pages/Teams";
 import Reports from "./pages/Reports";
 import Admin from "./pages/Admin";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import "./i18n/config";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +62,26 @@ const App = () => (
               }
             />
             <Route
+              path="/tasks/new"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <TaskNew />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tasks/:id"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <TaskDetail />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/projects"
               element={
                 <ProtectedRoute>
@@ -93,6 +117,16 @@ const App = () => (
                 <ProtectedRoute>
                   <MainLayout>
                     <Admin />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <Profile />
                   </MainLayout>
                 </ProtectedRoute>
               }

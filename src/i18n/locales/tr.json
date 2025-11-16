@@ -1,0 +1,200 @@
+{
+  "app": {
+    "name": "Revium Operasyon Merkezi",
+    "tagline": "Merkezi Operasyon Platformu"
+  },
+  "nav": {
+    "dashboard": "Ana Sayfa",
+    "myWork": "İşlerim",
+    "tasks": "Görevler",
+    "projects": "Projeler",
+    "teams": "Takımlar",
+    "reports": "Raporlar",
+    "admin": "Yönetim"
+  },
+  "auth": {
+    "login": "Giriş Yap",
+    "signup": "Kayıt Ol",
+    "email": "E-posta",
+    "password": "Şifre",
+    "name": "Ad",
+    "surname": "Soyad",
+    "loginButton": "Giriş Yap",
+    "signupButton": "Hesap Oluştur",
+    "noAccount": "Hesabınız yok mu?",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "loginHere": "Buradan giriş yapın",
+    "signupHere": "Buradan kayıt olun",
+    "loggingIn": "Giriş yapılıyor...",
+    "signingUp": "Hesap oluşturuluyor...",
+    "logout": "Çıkış Yap"
+  },
+  "dashboard": {
+    "title": "Ana Sayfa",
+    "subtitle": "İşlerinize genel bakış",
+    "myOpenTasks": "Açık Görevlerim",
+    "tasksICreated": "Oluşturduğum Görevler",
+    "openTasks": "Açık Görevler",
+    "criticalTasks": "Kritik Görevler",
+    "noTasks": "Görev yok",
+    "viewAll": "Tümünü Gör"
+  },
+  "tasks": {
+    "title": "Görevler",
+    "subtitle": "Tüm görevlerinizi yönetin ve takip edin",
+    "newTask": "Yeni Görev",
+    "list": "Liste",
+    "board": "Pano",
+    "noTasks": "Henüz görev yok. Başlamak için ilk görevinizi oluşturun.",
+    "createTask": "Görev Oluştur",
+    "editTask": "Görevi Düzenle",
+    "taskDetails": "Görev Detayları",
+    "assignee": "Atanan",
+    "unassigned": "Atanmamış",
+    "priority": "Öncelik",
+    "status": "Durum",
+    "type": "Tür",
+    "project": "Proje",
+    "dueDate": "Bitiş Tarihi",
+    "estimateHours": "Tahmini Süre (saat)",
+    "actualHours": "Gerçekleşen (saat)",
+    "skillTags": "Yetenek Etiketleri",
+    "description": "Açıklama",
+    "comments": "Yorumlar",
+    "activity": "Aktivite",
+    "attachments": "Ekler",
+    "watchers": "Takip Edenler",
+    "takeTask": "Görevi Üstlen",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "addComment": "Yorum ekle...",
+    "postComment": "Yorum Gönder",
+    "aiSuggestions": "AI Önerileri",
+    "suggestedAssignees": "Önerilen Atamalar",
+    "refineWithAI": "AI ile İyileştir",
+    "filter": "Filtrele",
+    "search": "Görev ara...",
+    "allStatuses": "Tüm Durumlar",
+    "allPriorities": "Tüm Öncelikler",
+    "allTypes": "Tüm Türler"
+  },
+  "taskStatus": {
+    "Backlog": "Beklemede",
+    "To Do": "Yapılacak",
+    "In Progress": "Devam Ediyor",
+    "Blocked": "Engellendi",
+    "Waiting Approval": "Onay Bekliyor",
+    "Done": "Tamamlandı",
+    "Canceled": "İptal Edildi"
+  },
+  "taskPriority": {
+    "Low": "Düşük",
+    "Medium": "Orta",
+    "High": "Yüksek",
+    "Critical": "Kritik"
+  },
+  "taskType": {
+    "Task": "Görev",
+    "Request": "İstek",
+    "Bug": "Hata",
+    "Idea": "Fikir",
+    "Improvement": "İyileştirme"
+  },
+  "projects": {
+    "title": "Projeler",
+    "subtitle": "Projelerinizi yönetin",
+    "newProject": "Yeni Proje",
+    "noProjects": "Henüz proje yok",
+    "projectDetails": "Proje Detayları",
+    "owner": "Sahip",
+    "startDate": "Başlangıç Tarihi",
+    "endDate": "Bitiş Tarihi",
+    "progress": "İlerleme"
+  },
+  "projectStatus": {
+    "Planned": "Planlandı",
+    "In Progress": "Devam Ediyor",
+    "On Hold": "Beklemede",
+    "Completed": "Tamamlandı"
+  },
+  "teams": {
+    "title": "Takımlar",
+    "subtitle": "Takımlarınızı yönetin",
+    "newTeam": "Yeni Takım",
+    "noTeams": "Henüz takım yok",
+    "teamDetails": "Takım Detayları",
+    "teamLead": "Takım Lideri",
+    "members": "Üyeler",
+    "addMember": "Üye Ekle"
+  },
+  "myWork": {
+    "title": "İşlerim",
+    "subtitle": "Kişisel çalışma alanınız",
+    "assignedToMe": "Bana Atananlar",
+    "tasksICreated": "Oluşturduğum Görevler",
+    "watching": "Takip Ettiklerim",
+    "dueThisWeek": "Bu Hafta Bitenler"
+  },
+  "admin": {
+    "title": "Yönetim",
+    "subtitle": "Sistem yönetimi",
+    "users": "Kullanıcılar",
+    "settings": "Ayarlar",
+    "manageUsers": "Kullanıcı Yönetimi",
+    "newUser": "Yeni Kullanıcı",
+    "editUser": "Kullanıcıyı Düzenle",
+    "deactivate": "Devre Dışı Bırak",
+    "activate": "Etkinleştir",
+    "role": "Rol",
+    "department": "Departman",
+    "skills": "Yetenekler",
+    "active": "Aktif",
+    "inactive": "Pasif"
+  },
+  "profile": {
+    "title": "Profil",
+    "editProfile": "Profili Düzenle",
+    "personalInfo": "Kişisel Bilgiler",
+    "workInfo": "İş Bilgileri",
+    "save": "Değişiklikleri Kaydet",
+    "phone": "Telefon",
+    "title": "Ünvan",
+    "bio": "Biyografi"
+  },
+  "departments": {
+    "Management": "Yönetim",
+    "Mechanical": "Mekanik",
+    "Electrical": "Elektrik",
+    "Software": "Yazılım",
+    "Sales": "Satış",
+    "Logistics": "Lojistik",
+    "Finance": "Finans",
+    "Other": "Diğer"
+  },
+  "roles": {
+    "Admin": "Yönetici",
+    "Manager": "Müdür",
+    "TeamLead": "Takım Lideri",
+    "Member": "Üye",
+    "Viewer": "İzleyici"
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "markAllRead": "Tümünü Okundu İşaretle",
+    "noNotifications": "Bildirim yok"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "view": "Görüntüle",
+    "close": "Kapat",
+    "confirm": "Onayla",
+    "back": "Geri",
+    "next": "İleri",
+    "submit": "Gönder",
+    "language": "Dil"
+  }
+}
