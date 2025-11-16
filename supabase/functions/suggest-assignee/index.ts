@@ -1,10 +1,19 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Input validation schema
+const requestSchema = z.object({
+  taskTitle: z.string().min(1, "Task title is required").max(200, "Task title too long"),
+  taskDescription: z.string().max(2000, "Description too long").optional(),
+  skillTags: z.array(z.string().max(50)).max(10, "Too many skill tags").optional(),
+  department: z.string().max(50, "Department name too long").optional(),
+});
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -12,7 +21,24 @@ serve(async (req) => {
   }
 
   try {
-    const { taskTitle, taskDescription, skillTags, department } = await req.json();
+    const body = await req.json();
+    
+    // Validate input
+    const validation = requestSchema.safeParse(body);
+    if (!validation.success) {
+      return new Response(
+        JSON.stringify({ 
+          error: "Invalid request parameters", 
+          details: validation.error.errors 
+        }), 
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        }
+      );
+    }
+    
+    const { taskTitle, taskDescription, skillTags, department } = validation.data;
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

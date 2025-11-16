@@ -68,14 +68,11 @@ export const AttachmentSection = ({ taskId }: AttachmentSectionProps) => {
 
       if (uploadError) throw uploadError;
 
-      const { data: urlData } = supabase.storage
-        .from("task-attachments")
-        .getPublicUrl(fileName);
-
+      // Store the private file path, not a public URL
       const { error: dbError } = await supabase.from("attachments").insert({
         task_id: taskId,
         file_name: file.name,
-        file_url: urlData.publicUrl,
+        file_url: fileName, // Store private path
         file_type: file.type,
         file_size: file.size,
         uploaded_by: user.id,
@@ -108,14 +105,12 @@ export const AttachmentSection = ({ taskId }: AttachmentSectionProps) => {
     if (!attachment) return;
 
     try {
-      const fileName = attachment.file_url.split("/").pop();
-      if (fileName) {
-        const { error: storageError } = await supabase.storage
-          .from("task-attachments")
-          .remove([`${attachment.uploaded_by}/${fileName}`]);
+      // Delete from storage using the stored file path
+      const { error: storageError } = await supabase.storage
+        .from("task-attachments")
+        .remove([attachment.file_url]);
 
-        if (storageError) throw storageError;
-      }
+      if (storageError) throw storageError;
 
       const { error: dbError } = await supabase
         .from("attachments")
@@ -143,7 +138,16 @@ export const AttachmentSection = ({ taskId }: AttachmentSectionProps) => {
 
   const handleDownload = async (attachment: Attachment) => {
     try {
-      const response = await fetch(attachment.file_url);
+      // Generate a signed URL valid for 60 seconds
+      const { data, error } = await supabase.storage
+        .from("task-attachments")
+        .createSignedUrl(attachment.file_url, 60);
+      
+      if (error) throw error;
+      if (!data?.signedUrl) throw new Error("Failed to generate download URL");
+      
+      // Download using the signed URL
+      const response = await fetch(data.signedUrl);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
