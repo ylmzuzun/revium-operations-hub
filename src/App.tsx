@@ -13,6 +13,7 @@ import Tasks from "./pages/Tasks";
 import TaskNew from "./pages/TaskNew";
 import TaskDetail from "./pages/TaskDetail";
 import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/ProjectDetail";
 import Teams from "./pages/Teams";
 import Reports from "./pages/Reports";
 import Admin from "./pages/Admin";
@@ -87,6 +88,16 @@ const App = () => (
                 <ProtectedRoute>
                   <MainLayout>
                     <Projects />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects/:id"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <ProjectDetail />
                   </MainLayout>
                 </ProtectedRoute>
               }
