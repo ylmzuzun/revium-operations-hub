@@ -70,7 +70,7 @@ const Profile = () => {
 
       if (error) throw error;
 
-      toast({ title: t("common.success"), description: "Profile updated successfully" });
+      toast({ title: t("common.success"), description: t("common.profileUpdatedSuccessfully") });
     } catch (error: any) {
       toast({ title: t("common.error"), description: error.message, variant: "destructive" });
     } finally {

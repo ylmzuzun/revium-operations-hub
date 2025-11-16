@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { supabase } from "@/lib/supabase";
-import { format, isSameDay, startOfMonth, endOfMonth } from "date-fns";
+import { isSameDay, startOfMonth, endOfMonth } from "date-fns";
+import { format } from "@/lib/dateUtils";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 

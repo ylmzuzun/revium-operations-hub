@@ -8,7 +8,8 @@ import { supabase } from "@/lib/supabase";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Download } from "lucide-react";
 import { toast } from "sonner";
-import { format, subDays, startOfWeek, endOfWeek } from "date-fns";
+import { subDays, startOfWeek, endOfWeek } from "date-fns";
+import { format } from "@/lib/dateUtils";
 
 interface TaskTrend {
   week: string;

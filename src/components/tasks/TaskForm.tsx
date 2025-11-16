@@ -77,7 +77,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
 
   const getSuggestions = async () => {
     if (!title) {
-      toast({ title: t("common.error"), description: "Please enter a task title first" });
+      toast({ title: t("common.error"), description: t("common.pleaseEnterTaskTitle") });
       return;
     }
 
@@ -135,7 +135,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
 
       if (error) throw error;
 
-      toast({ title: t("common.success"), description: "Task created successfully" });
+      toast({ title: t("common.success"), description: t("common.taskCreatedSuccessfully") });
       onSuccess?.();
     } catch (error: any) {
       toast({ title: t("common.error"), description: error.message });

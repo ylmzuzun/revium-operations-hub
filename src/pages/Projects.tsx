@@ -21,7 +21,7 @@ import { ProjectDialog } from "@/components/projects/ProjectDialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
 import { Plus, Search, Edit, Trash2, Folder, TrendingUp } from "lucide-react";
-import { format } from "date-fns";
+import { format } from "@/lib/dateUtils";
 
 const Projects = () => {
   const { t } = useTranslation();
@@ -119,7 +119,7 @@ const Projects = () => {
     if (error) {
       toast({ title: t("common.error"), description: error.message, variant: "destructive" });
     } else {
-      toast({ title: t("common.success"), description: "Project deleted successfully" });
+      toast({ title: t("common.success"), description: t("common.projectDeletedSuccessfully") });
       fetchProjects();
     }
 

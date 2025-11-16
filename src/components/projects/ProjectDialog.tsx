@@ -129,7 +129,7 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
           .eq("id", project.id);
 
         if (error) throw error;
-        toast({ title: t("common.success"), description: "Project updated successfully" });
+        toast({ title: t("common.success"), description: t("common.projectUpdatedSuccessfully") });
       } else {
         // Create new project
         const { error } = await supabase.from("projects").insert({
@@ -144,7 +144,7 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
         });
 
         if (error) throw error;
-        toast({ title: t("common.success"), description: "Project created successfully" });
+        toast({ title: t("common.success"), description: t("common.projectCreatedSuccessfully") });
       }
 
       onSuccess();

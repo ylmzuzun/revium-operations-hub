@@ -17,7 +17,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { Tables } from "@/integrations/supabase/types";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "@/lib/dateUtils";
 
 type Attachment = Tables<"attachments"> & {
   uploader: Tables<"profiles">;
