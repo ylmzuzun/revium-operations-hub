@@ -107,6 +107,34 @@
       "removeDependencyConfirm": "Bu bağımlılığı kaldırmak istediğinizden emin misiniz?",
       "blockedWarning": "Bu görev engellendi",
       "blockedWarningDescription": "Buna başlamadan önce engelleyen görevleri tamamlayın"
+    },
+    "approval": {
+      "title": "Onay İş Akışı",
+      "requestApproval": "Onay İste",
+      "requestDescription": "Bu görevi onay için gönderin. Gereken onay seviyesi sayısını seçin.",
+      "approvalLevels": "Onay Seviyesi Sayısı",
+      "level": "seviye",
+      "levels": "seviye",
+      "level1": "Seviye 1",
+      "level2": "Seviye 2",
+      "level3": "Seviye 3",
+      "notes": "Notlar",
+      "notesPlaceholder": "Onaylayanlar için notlar ekleyin...",
+      "submit": "Onay İçin Gönder",
+      "requestSubmitted": "Onay talebi başarıyla gönderildi",
+      "notRequested": "Bu görev henüz onay için gönderilmedi.",
+      "cannotRequest": "Sadece görev oluşturan veya atanan onay isteyebilir.",
+      "requestedBy": "Talep eden",
+      "approved": "Onaylandı",
+      "rejected": "Reddedildi",
+      "approve": "Onayla",
+      "reject": "Reddet",
+      "approveDescription": "Bu görevi onaylayarak bir sonraki onay seviyesine taşıyın veya tamamlandı olarak işaretleyin.",
+      "rejectDescription": "Bu görevi reddederek revizyonlar için geri gönderin.",
+      "comments": "Yorumlar",
+      "commentsPlaceholder": "Kararınız hakkında yorum ekleyin...",
+      "history": "Onay Geçmişi",
+      "waitingForApproval": "Yetkili kullanıcılardan onay bekleniyor."
     }
   },
   "taskStatus": {
@@ -271,7 +299,8 @@
     "save": "Kaydet",
     "saving": "Kaydediliyor...",
     "cancel": "İptal",
-    "uploading": "Yükleniyor..."
+    "uploading": "Yükleniyor...",
+    "optional": "opsiyonel"
   },
   "reports": {
     "title": "Raporlar",
