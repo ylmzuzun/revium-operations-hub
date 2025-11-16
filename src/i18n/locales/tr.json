@@ -69,6 +69,7 @@
     "actualHours": "Gerçekleşen (saat)",
     "skillTags": "Yetenek Etiketleri",
     "description": "Açıklama",
+    "startDate": "Başlangıç Tarihi",
     "comments": "Yorumlar",
     "activity": "Aktivite",
     "attachments": "Ekler",
@@ -298,5 +299,17 @@
     "noTasksOnDate": "Bu tarihte görev yok",
     "upcomingTasks": "Yaklaşan Görevler",
     "noUpcomingTasks": "Yaklaşan görev yok"
+  },
+  "gantt": {
+    "title": "Gantt Şeması",
+    "subtitle": "Proje zaman çizelgesi ve bağımlılık görselleştirmesi",
+    "timeline": "Zaman Çizelgesi",
+    "day": "Gün",
+    "week": "Hafta",
+    "month": "Ay",
+    "allProjects": "Tüm Projeler",
+    "noTasks": "Görüntülenecek tarihli görev yok",
+    "legend": "Açıklama",
+    "legendDescription": "Detayları görüntülemek için görevin üzerine çift tıklayın. Görevler önceliğe göre renklendirilir, tamamlanan görevler yeşil, engellenen görevler kırmızı ile gösterilir."
   }
 }

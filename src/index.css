@@ -126,3 +126,50 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Gantt chart custom styles */
+.gantt-container {
+  overflow-x: auto;
+}
+
+.gantt-container .gantt-task-list {
+  background-color: hsl(var(--background));
+  border-right: 1px solid hsl(var(--border));
+}
+
+.gantt-container .gantt-task-list-header {
+  background-color: hsl(var(--muted));
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.gantt-container .gantt-task-list-item {
+  border-bottom: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+.gantt-container .gantt-task-list-item:hover {
+  background-color: hsl(var(--accent));
+}
+
+.gantt-container .gantt-calendar {
+  background-color: hsl(var(--background));
+}
+
+.gantt-container .gantt-calendar-header {
+  background-color: hsl(var(--muted));
+  border-bottom: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+.gantt-container .gantt-calendar-row {
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.gantt-container .gantt-bar {
+  cursor: pointer;
+}
+
+.gantt-container .gantt-bar:hover {
+  opacity: 0.9;
+}
+

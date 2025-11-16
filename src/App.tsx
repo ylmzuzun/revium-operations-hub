@@ -18,6 +18,7 @@ import Teams from "./pages/Teams";
 import TeamDetail from "./pages/TeamDetail";
 import Reports from "./pages/Reports";
 import Calendar from "./pages/Calendar";
+import Gantt from "./pages/Gantt";
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
@@ -140,6 +141,16 @@ const App = () => (
                 <ProtectedRoute>
                   <MainLayout>
                     <Calendar />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/gantt"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <Gantt />
                   </MainLayout>
                 </ProtectedRoute>
               }
