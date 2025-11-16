@@ -17,6 +17,7 @@ import { AttachmentSection } from "@/components/tasks/AttachmentSection";
 import { DependenciesSection } from "@/components/tasks/DependenciesSection";
 import { ApprovalSection } from "@/components/tasks/ApprovalSection";
 import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
 
 const TaskDetail = () => {
   const { t } = useTranslation();
@@ -93,13 +94,30 @@ const TaskDetail = () => {
     }
   };
 
+  const commentSchema = z.object({
+    message: z.string()
+      .trim()
+      .min(1, "Comment cannot be empty")
+      .max(5000, "Comment too long (max 5000 characters)"),
+  });
+
   const handlePostComment = async () => {
-    if (!commentText.trim() || !currentUser) return;
+    if (!currentUser) return;
+
+    const validation = commentSchema.safeParse({ message: commentText });
+    if (!validation.success) {
+      toast({
+        title: t("common.error"),
+        description: validation.error.errors[0].message,
+        variant: "destructive",
+      });
+      return;
+    }
 
     const { error } = await supabase.from("comments").insert({
       task_id: id!,
       author_id: currentUser.id,
-      message: commentText,
+      message: validation.data.message,
     });
 
     if (error) {
