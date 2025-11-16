@@ -1,4 +1,4 @@
-import { Home, CheckSquare, Folder, Users, BarChart3, Settings, Building2 } from "lucide-react";
+import { Home, CheckSquare, Folder, Users, BarChart3, Settings, Building2, Calendar } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -20,6 +20,7 @@ const mainItems = [
   { title: "Tasks", url: "/tasks", icon: CheckSquare },
   { title: "Projects", url: "/projects", icon: Folder },
   { title: "Teams", url: "/teams", icon: Users },
+  { title: "Calendar", url: "/calendar", icon: Calendar },
 ];
 
 const secondaryItems = [

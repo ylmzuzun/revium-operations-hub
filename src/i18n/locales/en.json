@@ -274,5 +274,13 @@
     "totalTasks": "Total Tasks",
     "completionRate": "Completion Rate",
     "noData": "No data available"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "subtitle": "View your tasks in a calendar",
+    "monthView": "Month View",
+    "noTasksOnDate": "No tasks on this date",
+    "upcomingTasks": "Upcoming Tasks",
+    "noUpcomingTasks": "No upcoming tasks"
   }
 }
