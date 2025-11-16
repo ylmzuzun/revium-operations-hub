@@ -274,5 +274,13 @@
     "totalTasks": "Toplam Görev",
     "completionRate": "Tamamlanma Oranı",
     "noData": "Veri yok"
+  },
+  "calendar": {
+    "title": "Takvim",
+    "subtitle": "Görevlerinizi takvimde görüntüleyin",
+    "monthView": "Ay Görünümü",
+    "noTasksOnDate": "Bu tarihte görev yok",
+    "upcomingTasks": "Yaklaşan Görevler",
+    "noUpcomingTasks": "Yaklaşan görev yok"
   }
 }
