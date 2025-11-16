@@ -134,7 +134,20 @@
       "comments": "Yorumlar",
       "commentsPlaceholder": "Kararınız hakkında yorum ekleyin...",
       "history": "Onay Geçmişi",
-      "waitingForApproval": "Yetkili kullanıcılardan onay bekleniyor."
+      "waitingForApproval": "Yetkili kullanıcılardan onay bekleniyor.",
+      "pendingApprovals": "Bekleyen Onaylar",
+      "noPendingApprovals": "Bekleyen onay yok",
+      "confirmApprove": "Onayı Onayla",
+      "confirmReject": "Reddi Onayla",
+      "currentLevel": "Mevcut Seviye",
+      "error": {
+        "fetchFailed": "Onay verileri alınamadı",
+        "actionFailed": "Onay işlemi gönderilemedi"
+      },
+      "success": {
+        "approved": "Görev başarıyla onaylandı",
+        "rejected": "Görev başarıyla reddedildi"
+      }
     }
   },
   "taskStatus": {
@@ -298,6 +311,7 @@
     "selectDate": "Tarih seç",
     "save": "Kaydet",
     "saving": "Kaydediliyor...",
+    "submitting": "Gönderiliyor...",
     "cancel": "İptal",
     "uploading": "Yükleniyor...",
     "optional": "opsiyonel"

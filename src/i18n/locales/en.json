@@ -134,7 +134,20 @@
       "comments": "Comments",
       "commentsPlaceholder": "Add comments about your decision...",
       "history": "Approval History",
-      "waitingForApproval": "Waiting for approval from authorized users."
+      "waitingForApproval": "Waiting for approval from authorized users.",
+      "pendingApprovals": "Pending Approvals",
+      "noPendingApprovals": "No pending approvals",
+      "confirmApprove": "Confirm Approval",
+      "confirmReject": "Confirm Rejection",
+      "currentLevel": "Current Level",
+      "error": {
+        "fetchFailed": "Failed to fetch approval data",
+        "actionFailed": "Failed to submit approval action"
+      },
+      "success": {
+        "approved": "Task approved successfully",
+        "rejected": "Task rejected successfully"
+      }
     }
   },
   "taskStatus": {
@@ -298,6 +311,7 @@
     "selectDate": "Select date",
     "save": "Save",
     "saving": "Saving...",
+    "submitting": "Submitting...",
     "cancel": "Cancel",
     "uploading": "Uploading...",
     "optional": "optional"
