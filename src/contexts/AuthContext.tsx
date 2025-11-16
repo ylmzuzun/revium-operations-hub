@@ -34,48 +34,45 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        try {
-          setSession(session);
-          setUser(session?.user ?? null);
-          
-          if (session?.user) {
-            const { data } = await supabase
-              .from("profiles")
-              .select("*")
-              .eq("id", session.user.id)
-              .maybeSingle();
-            setProfile(data);
-          } else {
-            setProfile(null);
-          }
-        } catch (error) {
-          console.error("Error fetching profile:", error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    );
-
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    const fetchProfile = async (userId: string) => {
       try {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          const { data } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", session.user.id)
-            .maybeSingle();
-          setProfile(data);
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      } finally {
-        setLoading(false);
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", userId)
+          .maybeSingle();
+        setProfile(data);
+      } catch (e) {
+        console.error("Profile fetch error:", e);
       }
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+
+      if (currentUser) {
+        // Defer DB calls outside the auth callback to avoid deadlocks
+        setTimeout(() => fetchProfile(currentUser.id), 0);
+      } else {
+        setProfile(null);
+      }
+
+      setLoading(false);
+    });
+
+    // Check for existing session after subscribing
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+
+      if (currentUser) {
+        fetchProfile(currentUser.id);
+      }
+
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
