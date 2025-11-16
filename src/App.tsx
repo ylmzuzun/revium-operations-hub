@@ -15,6 +15,7 @@ import TaskDetail from "./pages/TaskDetail";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Teams from "./pages/Teams";
+import TeamDetail from "./pages/TeamDetail";
 import Reports from "./pages/Reports";
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
@@ -108,6 +109,16 @@ const App = () => (
                 <ProtectedRoute>
                   <MainLayout>
                     <Teams />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/teams/:id"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <TeamDetail />
                   </MainLayout>
                 </ProtectedRoute>
               }
