@@ -149,7 +149,20 @@
     "department": "Departman",
     "skills": "Yetenekler",
     "active": "Aktif",
-    "inactive": "Pasif"
+    "inactive": "Pasif",
+    "totalUsers": "Toplam Kullanıcı",
+    "activeUsers": "Aktif Kullanıcılar",
+    "addUser": "Kullanıcı Ekle",
+    "userDetails": "Kullanıcı Detayları",
+    "status": "Durum",
+    "lastUpdated": "Son Güncelleme",
+    "actions": "İşlemler",
+    "confirmDeactivate": "Bu kullanıcıyı devre dışı bırakmak istediğinizden emin misiniz?",
+    "confirmActivate": "Bu kullanıcıyı etkinleştirmek istediğinizden emin misiniz?",
+    "userDeactivated": "Kullanıcı başarıyla devre dışı bırakıldı",
+    "userActivated": "Kullanıcı başarıyla etkinleştirildi",
+    "userCreated": "Kullanıcı başarıyla oluşturuldu",
+    "userUpdated": "Kullanıcı başarıyla güncellendi"
   },
   "profile": {
     "title": "Profil",
@@ -195,6 +208,7 @@
     "back": "Geri",
     "next": "İleri",
     "submit": "Gönder",
-    "language": "Dil"
+    "language": "Dil",
+    "add": "Ekle"
   }
 }

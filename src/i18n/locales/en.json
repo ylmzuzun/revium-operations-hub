@@ -149,7 +149,20 @@
     "department": "Department",
     "skills": "Skills",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "totalUsers": "Total Users",
+    "activeUsers": "Active Users",
+    "addUser": "Add User",
+    "userDetails": "User Details",
+    "status": "Status",
+    "lastUpdated": "Last Updated",
+    "actions": "Actions",
+    "confirmDeactivate": "Are you sure you want to deactivate this user?",
+    "confirmActivate": "Are you sure you want to activate this user?",
+    "userDeactivated": "User deactivated successfully",
+    "userActivated": "User activated successfully",
+    "userCreated": "User created successfully",
+    "userUpdated": "User updated successfully"
   },
   "profile": {
     "title": "Profile",
@@ -195,6 +208,7 @@
     "back": "Back",
     "next": "Next",
     "submit": "Submit",
-    "language": "Language"
+    "language": "Language",
+    "add": "Add"
   }
 }
