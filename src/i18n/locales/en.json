@@ -1,0 +1,200 @@
+{
+  "app": {
+    "name": "Revium Ops Center",
+    "tagline": "Centralized Operations Platform"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "myWork": "My Work",
+    "tasks": "Tasks",
+    "projects": "Projects",
+    "teams": "Teams",
+    "reports": "Reports",
+    "admin": "Admin"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "surname": "Surname",
+    "loginButton": "Sign In",
+    "signupButton": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginHere": "Login here",
+    "signupHere": "Sign up here",
+    "loggingIn": "Signing in...",
+    "signingUp": "Creating account...",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your work",
+    "myOpenTasks": "My Open Tasks",
+    "tasksICreated": "Tasks I Created",
+    "openTasks": "Open Tasks",
+    "criticalTasks": "Critical Tasks",
+    "noTasks": "No tasks",
+    "viewAll": "View All"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "subtitle": "Manage and track all your tasks",
+    "newTask": "New Task",
+    "list": "List",
+    "board": "Board",
+    "noTasks": "No tasks yet. Create your first task to get started.",
+    "createTask": "Create Task",
+    "editTask": "Edit Task",
+    "taskDetails": "Task Details",
+    "assignee": "Assignee",
+    "unassigned": "Unassigned",
+    "priority": "Priority",
+    "status": "Status",
+    "type": "Type",
+    "project": "Project",
+    "dueDate": "Due Date",
+    "estimateHours": "Estimate (hours)",
+    "actualHours": "Actual (hours)",
+    "skillTags": "Skill Tags",
+    "description": "Description",
+    "comments": "Comments",
+    "activity": "Activity",
+    "attachments": "Attachments",
+    "watchers": "Watchers",
+    "takeTask": "Take This Task",
+    "save": "Save",
+    "cancel": "Cancel",
+    "addComment": "Add a comment...",
+    "postComment": "Post Comment",
+    "aiSuggestions": "AI Suggestions",
+    "suggestedAssignees": "Suggested Assignees",
+    "refineWithAI": "Refine with AI",
+    "filter": "Filter",
+    "search": "Search tasks...",
+    "allStatuses": "All Statuses",
+    "allPriorities": "All Priorities",
+    "allTypes": "All Types"
+  },
+  "taskStatus": {
+    "Backlog": "Backlog",
+    "To Do": "To Do",
+    "In Progress": "In Progress",
+    "Blocked": "Blocked",
+    "Waiting Approval": "Waiting Approval",
+    "Done": "Done",
+    "Canceled": "Canceled"
+  },
+  "taskPriority": {
+    "Low": "Low",
+    "Medium": "Medium",
+    "High": "High",
+    "Critical": "Critical"
+  },
+  "taskType": {
+    "Task": "Task",
+    "Request": "Request",
+    "Bug": "Bug",
+    "Idea": "Idea",
+    "Improvement": "Improvement"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Manage your projects",
+    "newProject": "New Project",
+    "noProjects": "No projects yet",
+    "projectDetails": "Project Details",
+    "owner": "Owner",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "progress": "Progress"
+  },
+  "projectStatus": {
+    "Planned": "Planned",
+    "In Progress": "In Progress",
+    "On Hold": "On Hold",
+    "Completed": "Completed"
+  },
+  "teams": {
+    "title": "Teams",
+    "subtitle": "Manage your teams",
+    "newTeam": "New Team",
+    "noTeams": "No teams yet",
+    "teamDetails": "Team Details",
+    "teamLead": "Team Lead",
+    "members": "Members",
+    "addMember": "Add Member"
+  },
+  "myWork": {
+    "title": "My Work",
+    "subtitle": "Your personal workspace",
+    "assignedToMe": "Assigned to Me",
+    "tasksICreated": "Tasks I Created",
+    "watching": "Watching",
+    "dueThisWeek": "Due This Week"
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "System administration",
+    "users": "Users",
+    "settings": "Settings",
+    "manageUsers": "Manage Users",
+    "newUser": "New User",
+    "editUser": "Edit User",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "role": "Role",
+    "department": "Department",
+    "skills": "Skills",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit Profile",
+    "personalInfo": "Personal Information",
+    "workInfo": "Work Information",
+    "save": "Save Changes",
+    "phone": "Phone",
+    "title": "Title",
+    "bio": "Bio"
+  },
+  "departments": {
+    "Management": "Management",
+    "Mechanical": "Mechanical",
+    "Electrical": "Electrical",
+    "Software": "Software",
+    "Sales": "Sales",
+    "Logistics": "Logistics",
+    "Finance": "Finance",
+    "Other": "Other"
+  },
+  "roles": {
+    "Admin": "Admin",
+    "Manager": "Manager",
+    "TeamLead": "Team Lead",
+    "Member": "Member",
+    "Viewer": "Viewer"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark All as Read",
+    "noNotifications": "No notifications"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "language": "Language"
+  }
+}
