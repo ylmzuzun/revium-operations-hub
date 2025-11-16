@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, User } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
-import { format } from "date-fns";
+import { format } from "@/lib/dateUtils";
 import { AttachmentSection } from "@/components/tasks/AttachmentSection";
 import { DependenciesSection } from "@/components/tasks/DependenciesSection";
 import { ApprovalSection } from "@/components/tasks/ApprovalSection";
@@ -89,7 +89,7 @@ const TaskDetail = () => {
     if (error) {
       toast({ title: t("common.error"), description: error.message, variant: "destructive" });
     } else {
-      toast({ title: t("common.success"), description: "Task assigned to you" });
+      toast({ title: t("common.success"), description: t("common.taskAssignedToYou") });
       fetchTask();
     }
   };
@@ -97,8 +97,8 @@ const TaskDetail = () => {
   const commentSchema = z.object({
     message: z.string()
       .trim()
-      .min(1, "Comment cannot be empty")
-      .max(5000, "Comment too long (max 5000 characters)"),
+      .min(1, t("common.commentEmpty"))
+      .max(5000, t("common.commentTooLong")),
   });
 
   const handlePostComment = async () => {
@@ -123,6 +123,7 @@ const TaskDetail = () => {
     if (error) {
       toast({ title: t("common.error"), description: error.message, variant: "destructive" });
     } else {
+      toast({ title: t("common.success"), description: t("common.commentPosted") });
       setCommentText("");
       fetchComments();
     }

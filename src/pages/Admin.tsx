@@ -28,7 +28,7 @@ import { UserDialog } from "@/components/admin/UserDialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/hooks/use-toast";
 import { Plus, Search, Edit, Ban, CheckCircle, Users } from "lucide-react";
-import { format } from "date-fns";
+import { format } from "@/lib/dateUtils";
 
 const Admin = () => {
   const { t } = useTranslation();
@@ -62,7 +62,7 @@ const Admin = () => {
       if (error.code === 'PGRST301' || error.message?.includes('row-level security')) {
         toast({
           title: t("common.error"),
-          description: "You don't have permission to access this page.",
+          description: t("common.noPermission"),
           variant: "destructive",
         });
         setUsers([]);

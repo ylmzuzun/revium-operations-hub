@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Edit, Calendar, User } from "lucide-react";
 import { ProjectDialog } from "@/components/projects/ProjectDialog";
 import { TaskList } from "@/components/tasks/TaskList";
-import { format } from "date-fns";
+import { format } from "@/lib/dateUtils";
 
 const ProjectDetail = () => {
   const { t } = useTranslation();
@@ -90,7 +90,7 @@ const ProjectDetail = () => {
       <div className="flex items-center justify-center h-full">
         <Card>
           <CardContent className="p-8">
-            <p className="text-muted-foreground">Project not found</p>
+            <p className="text-muted-foreground">{t("common.projectNotFound")}</p>
           </CardContent>
         </Card>
       </div>

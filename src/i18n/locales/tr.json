@@ -216,7 +216,9 @@
     "selectTeamLead": "Takım lideri seçin",
     "removeMember": "Çıkar",
     "noMembers": "Henüz üye yok",
-    "teamTasks": "Takım Görevleri"
+    "teamTasks": "Takım Görevleri",
+    "teamCreated": "Takım başarıyla oluşturuldu",
+    "teamUpdated": "Takım başarıyla güncellendi"
   },
   "myWork": {
     "title": "İşlerim",
@@ -314,7 +316,22 @@
     "submitting": "Gönderiliyor...",
     "cancel": "İptal",
     "uploading": "Yükleniyor...",
-    "optional": "opsiyonel"
+    "optional": "opsiyonel",
+    "taskAssignedToYou": "Görev size atandı",
+    "commentEmpty": "Yorum boş olamaz",
+    "commentTooLong": "Yorum çok uzun (maksimum 5000 karakter)",
+    "commentPosted": "Yorum başarıyla gönderildi",
+    "pleaseEnterTaskTitle": "Lütfen bir görev başlığı girin",
+    "taskCreatedSuccessfully": "Görev başarıyla oluşturuldu",
+    "taskUpdatedSuccessfully": "Görev başarıyla güncellendi",
+    "profileUpdatedSuccessfully": "Profil başarıyla güncellendi",
+    "projectCreatedSuccessfully": "Proje başarıyla oluşturuldu",
+    "projectUpdatedSuccessfully": "Proje başarıyla güncellendi",
+    "projectDeletedSuccessfully": "Proje başarıyla silindi",
+    "projectNotFound": "Proje bulunamadı",
+    "teamCreatedSuccessfully": "Takım başarıyla oluşturuldu",
+    "teamUpdatedSuccessfully": "Takım başarıyla güncellendi",
+    "noPermission": "Bu sayfaya erişim izniniz yok."
   },
   "reports": {
     "title": "Raporlar",

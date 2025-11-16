@@ -8,7 +8,7 @@ import { CheckSquare, Clock, AlertCircle, TrendingUp, Plus } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "@/lib/dateUtils";
 import { PendingApprovalsWidget } from "@/components/dashboard/PendingApprovalsWidget";
 
 interface DashboardStats {

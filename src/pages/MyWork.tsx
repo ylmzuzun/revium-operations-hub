@@ -7,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Tables } from "@/integrations/supabase/types";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "@/lib/dateUtils";
 
 type Task = Tables<"tasks"> & {
   assignee: Tables<"profiles"> | null;

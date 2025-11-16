@@ -16,6 +16,10 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    saveMissing: true,
+    missingKeyHandler: (lngs, ns, key) => {
+      console.warn(`Missing translation key: ${key} for language: ${lngs}`);
+    },
   });
 
 export default i18n;

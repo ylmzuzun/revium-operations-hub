@@ -10,7 +10,7 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { CheckCircle2, XCircle, Clock, Send, AlertCircle } from "lucide-react";
-import { format } from "date-fns";
+import { format } from "@/lib/dateUtils";
 import {
   Dialog,
   DialogContent,

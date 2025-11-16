@@ -216,7 +216,9 @@
     "selectTeamLead": "Select team lead",
     "removeMember": "Remove",
     "noMembers": "No members yet",
-    "teamTasks": "Team Tasks"
+    "teamTasks": "Team Tasks",
+    "teamCreated": "Team created successfully",
+    "teamUpdated": "Team updated successfully"
   },
   "myWork": {
     "title": "My Work",
@@ -314,7 +316,22 @@
     "submitting": "Submitting...",
     "cancel": "Cancel",
     "uploading": "Uploading...",
-    "optional": "optional"
+    "optional": "optional",
+    "taskAssignedToYou": "Task assigned to you",
+    "commentEmpty": "Comment cannot be empty",
+    "commentTooLong": "Comment too long (max 5000 characters)",
+    "commentPosted": "Comment posted successfully",
+    "pleaseEnterTaskTitle": "Please enter a task title",
+    "taskCreatedSuccessfully": "Task created successfully",
+    "taskUpdatedSuccessfully": "Task updated successfully",
+    "profileUpdatedSuccessfully": "Profile updated successfully",
+    "projectCreatedSuccessfully": "Project created successfully",
+    "projectUpdatedSuccessfully": "Project updated successfully",
+    "projectDeletedSuccessfully": "Project deleted successfully",
+    "projectNotFound": "Project not found",
+    "teamCreatedSuccessfully": "Team created successfully",
+    "teamUpdatedSuccessfully": "Team updated successfully",
+    "noPermission": "You don't have permission to access this page."
   },
   "reports": {
     "title": "Reports",
