@@ -13,6 +13,7 @@ import { ArrowLeft, User } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
 import { format } from "date-fns";
+import { AttachmentSection } from "@/components/tasks/AttachmentSection";
 
 const TaskDetail = () => {
   const { t } = useTranslation();
@@ -286,6 +287,8 @@ const TaskDetail = () => {
               )}
             </CardContent>
           </Card>
+
+          <AttachmentSection taskId={id!} />
         </div>
       </div>
     </div>

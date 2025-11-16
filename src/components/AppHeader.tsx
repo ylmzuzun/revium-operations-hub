@@ -1,4 +1,4 @@
-import { Bell, Search, User } from "lucide-react";
+import { Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,19 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { signOut } from "@/lib/supabase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
+import { NotificationPopover } from "./notifications/NotificationPopover";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function AppHeader() {
   const navigate = useNavigate();
@@ -52,32 +45,8 @@ export function AppHeader() {
       </div>
 
       <div className="flex items-center gap-2">
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <Badge 
-                variant="destructive" 
-                className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-[10px] flex items-center justify-center"
-              >
-                3
-              </Badge>
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Notifications</SheetTitle>
-              <SheetDescription>
-                You have 3 unread notifications
-              </SheetDescription>
-            </SheetHeader>
-            <div className="mt-4 space-y-4">
-              <p className="text-sm text-muted-foreground text-center py-8">
-                No notifications yet
-              </p>
-            </div>
-          </SheetContent>
-        </Sheet>
+        <LanguageSwitcher />
+        <NotificationPopover />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
