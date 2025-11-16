@@ -37,7 +37,16 @@
     "openTasks": "Open Tasks",
     "criticalTasks": "Critical Tasks",
     "noTasks": "No tasks",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "recentActivity": "Recent Activity",
+    "noRecentActivity": "No recent activity",
+    "changedStatus": "changed status of",
+    "assignedTask": "assigned",
+    "updated": "updated",
+    "taskStatusOverview": "Task Status Overview",
+    "priorityDistribution": "Priority Distribution",
+    "noData": "No data available",
+    "tasks": "Tasks"
   },
   "tasks": {
     "title": "Tasks",
@@ -76,7 +85,12 @@
     "search": "Search tasks...",
     "allStatuses": "All Statuses",
     "allPriorities": "All Priorities",
-    "allTypes": "All Types"
+    "allTypes": "All Types",
+    "uploadFile": "Upload File",
+    "noAttachments": "No attachments yet",
+    "fileUploaded": "File uploaded successfully",
+    "downloadFile": "Download",
+    "deleteFile": "Delete"
   },
   "taskStatus": {
     "Backlog": "Backlog",
@@ -136,15 +150,24 @@
     "teamDetails": "Team Details",
     "teamLead": "Team Lead",
     "members": "Members",
-    "addMember": "Add Member"
+    "addMember": "Add Member",
+    "createTeam": "Create Team",
+    "editTeam": "Edit Team",
+    "name": "Name",
+    "description": "Description",
+    "selectTeamLead": "Select team lead",
+    "removeMember": "Remove",
+    "noMembers": "No members yet",
+    "teamTasks": "Team Tasks"
   },
   "myWork": {
     "title": "My Work",
-    "subtitle": "Your personal workspace",
+    "subtitle": "Your personal task overview",
     "assignedToMe": "Assigned to Me",
     "tasksICreated": "Tasks I Created",
     "watching": "Watching",
-    "dueThisWeek": "Due This Week"
+    "dueThisWeek": "Due This Week",
+    "noTasks": "No tasks"
   },
   "admin": {
     "title": "Admin",
@@ -205,7 +228,8 @@
   "notifications": {
     "title": "Notifications",
     "markAllRead": "Mark All as Read",
-    "noNotifications": "No notifications"
+    "noNotifications": "No notifications",
+    "markRead": "Mark as read"
   },
   "common": {
     "loading": "Loading...",
@@ -220,6 +244,35 @@
     "next": "Next",
     "submit": "Submit",
     "language": "Language",
-    "add": "Add"
+    "add": "Add",
+    "create": "Create",
+    "update": "Update",
+    "search": "Search...",
+    "actions": "Actions",
+    "noData": "No data available",
+    "selectDate": "Select date",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "uploading": "Uploading..."
+  },
+  "reports": {
+    "title": "Reports",
+    "subtitle": "Insights and analytics for your organization",
+    "taskCompletionTrends": "Task Completion Trends",
+    "workloadDistribution": "Workload Distribution",
+    "teamPerformance": "Team Performance",
+    "last7Days": "Last 7 Days",
+    "last30Days": "Last 30 Days",
+    "last90Days": "Last 90 Days",
+    "allTime": "All Time",
+    "exportPDF": "Export PDF",
+    "exportComingSoon": "Export feature coming soon",
+    "completedTasks": "Completed Tasks",
+    "taskCount": "Task Count",
+    "teamName": "Team Name",
+    "totalTasks": "Total Tasks",
+    "completionRate": "Completion Rate",
+    "noData": "No data available"
   }
 }

@@ -37,7 +37,16 @@
     "openTasks": "Açık Görevler",
     "criticalTasks": "Kritik Görevler",
     "noTasks": "Görev yok",
-    "viewAll": "Tümünü Gör"
+    "viewAll": "Tümünü Gör",
+    "recentActivity": "Son Aktiviteler",
+    "noRecentActivity": "Son aktivite yok",
+    "changedStatus": "durumunu değiştirdi",
+    "assignedTask": "atadı",
+    "updated": "güncelledi",
+    "taskStatusOverview": "Görev Durum Özeti",
+    "priorityDistribution": "Öncelik Dağılımı",
+    "noData": "Veri yok",
+    "tasks": "Görevler"
   },
   "tasks": {
     "title": "Görevler",
@@ -76,7 +85,12 @@
     "search": "Görev ara...",
     "allStatuses": "Tüm Durumlar",
     "allPriorities": "Tüm Öncelikler",
-    "allTypes": "Tüm Türler"
+    "allTypes": "Tüm Türler",
+    "uploadFile": "Dosya Yükle",
+    "noAttachments": "Henüz ek yok",
+    "fileUploaded": "Dosya başarıyla yüklendi",
+    "downloadFile": "İndir",
+    "deleteFile": "Sil"
   },
   "taskStatus": {
     "Backlog": "Beklemede",
@@ -136,15 +150,24 @@
     "teamDetails": "Takım Detayları",
     "teamLead": "Takım Lideri",
     "members": "Üyeler",
-    "addMember": "Üye Ekle"
+    "addMember": "Üye Ekle",
+    "createTeam": "Takım Oluştur",
+    "editTeam": "Takımı Düzenle",
+    "name": "İsim",
+    "description": "Açıklama",
+    "selectTeamLead": "Takım lideri seçin",
+    "removeMember": "Çıkar",
+    "noMembers": "Henüz üye yok",
+    "teamTasks": "Takım Görevleri"
   },
   "myWork": {
     "title": "İşlerim",
-    "subtitle": "Kişisel çalışma alanınız",
-    "assignedToMe": "Bana Atananlar",
+    "subtitle": "Kişisel görev özetiniz",
+    "assignedToMe": "Bana Atanan",
     "tasksICreated": "Oluşturduğum Görevler",
     "watching": "Takip Ettiklerim",
-    "dueThisWeek": "Bu Hafta Bitenler"
+    "dueThisWeek": "Bu Hafta Biten",
+    "noTasks": "Görev yok"
   },
   "admin": {
     "title": "Yönetim",
@@ -205,7 +228,8 @@
   "notifications": {
     "title": "Bildirimler",
     "markAllRead": "Tümünü Okundu İşaretle",
-    "noNotifications": "Bildirim yok"
+    "noNotifications": "Bildirim yok",
+    "markRead": "Okundu işaretle"
   },
   "common": {
     "loading": "Yükleniyor...",
@@ -220,6 +244,35 @@
     "next": "İleri",
     "submit": "Gönder",
     "language": "Dil",
-    "add": "Ekle"
+    "add": "Ekle",
+    "create": "Oluştur",
+    "update": "Güncelle",
+    "search": "Ara...",
+    "actions": "İşlemler",
+    "noData": "Veri yok",
+    "selectDate": "Tarih seç",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor...",
+    "cancel": "İptal",
+    "uploading": "Yükleniyor..."
+  },
+  "reports": {
+    "title": "Raporlar",
+    "subtitle": "Organizasyonunuz için içgörüler ve analizler",
+    "taskCompletionTrends": "Görev Tamamlama Trendleri",
+    "workloadDistribution": "İş Yükü Dağılımı",
+    "teamPerformance": "Takım Performansı",
+    "last7Days": "Son 7 Gün",
+    "last30Days": "Son 30 Gün",
+    "last90Days": "Son 90 Gün",
+    "allTime": "Tüm Zamanlar",
+    "exportPDF": "PDF Olarak Dışa Aktar",
+    "exportComingSoon": "Dışa aktarma özelliği yakında",
+    "completedTasks": "Tamamlanan Görevler",
+    "taskCount": "Görev Sayısı",
+    "teamName": "Takım Adı",
+    "totalTasks": "Toplam Görev",
+    "completionRate": "Tamamlanma Oranı",
+    "noData": "Veri yok"
   }
 }
