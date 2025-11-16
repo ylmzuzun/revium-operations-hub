@@ -38,7 +38,7 @@ const userSchema = z.object({
   bio: z.string().trim().max(500, "Bio too long").optional(),
   department: z.enum(["Management", "Mechanical", "Electrical", "Software", "Sales", "Logistics", "Finance", "Other"]),
   global_role: z.enum(["Admin", "Manager", "TeamLead", "Member", "Viewer"]),
-  password: z.string().min(6, "Password must be at least 6 characters").optional(),
+  password: z.string().optional(),
 });
 
 type UserFormData = z.infer<typeof userSchema>;
@@ -60,7 +60,6 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
     register,
     handleSubmit,
     setValue,
-    watch,
     reset,
     formState: { errors },
   } = useForm<UserFormData>({
@@ -100,7 +99,6 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
     setLoading(true);
     try {
       if (user) {
-        // Update existing user
         const { error } = await supabase
           .from("profiles")
           .update({
@@ -118,35 +116,30 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
         if (error) throw error;
         toast({ title: t("common.success"), description: t("admin.userUpdated") });
       } else {
-        // Create new user - requires admin API or service role
-        // For now, we'll create via auth.signUp with metadata
+        const generatedPassword = data.password || Array.from({ length: 10 }, () => 
+          'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'[
+            Math.floor(Math.random() * 68)
+          ]
+        ).join('');
+
         const { data: authData, error: signUpError } = await supabase.auth.admin.createUser({
           email: data.email,
-          password: data.password || Math.random().toString(36).slice(-8),
+          password: generatedPassword,
           email_confirm: true,
-          user_metadata: {
-            name: data.name,
-            surname: data.surname,
-          },
+          user_metadata: { name: data.name, surname: data.surname },
         });
 
         if (signUpError) throw signUpError;
 
         if (authData.user) {
-          // Update the auto-created profile with additional data
-          const { error: updateError } = await supabase
-            .from("profiles")
-            .update({
-              phone: data.phone || null,
-              title: data.title || null,
-              bio: data.bio || null,
-              department: data.department,
-              global_role: data.global_role,
-              skills: skills.length > 0 ? skills : null,
-            })
-            .eq("id", authData.user.id);
-
-          if (updateError) throw updateError;
+          await supabase.from("profiles").update({
+            phone: data.phone || null,
+            title: data.title || null,
+            bio: data.bio || null,
+            department: data.department,
+            global_role: data.global_role,
+            skills: skills.length > 0 ? skills : null,
+          }).eq("id", authData.user.id);
         }
 
         toast({ title: t("common.success"), description: t("admin.userCreated") });
@@ -157,12 +150,7 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
       reset();
       setSkills([]);
     } catch (error: any) {
-      console.error("User operation error:", error);
-      toast({
-        title: t("common.error"),
-        description: error.message || "Failed to save user",
-        variant: "destructive",
-      });
+      toast({ title: t("common.error"), description: error.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -172,153 +160,82 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>
-            {user ? t("admin.editUser") : t("admin.newUser")}
-          </DialogTitle>
+          <DialogTitle>{user ? t("admin.editUser") : t("admin.newUser")}</DialogTitle>
         </DialogHeader>
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="name">{t("auth.name")} *</Label>
-              <Input id="name" {...register("name")} />
-              {errors.name && (
-                <p className="text-xs text-destructive mt-1">{errors.name.message}</p>
-              )}
+              <Label>{t("auth.name")} *</Label>
+              <Input {...register("name")} />
+              {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
             </div>
-
             <div>
-              <Label htmlFor="surname">{t("auth.surname")} *</Label>
-              <Input id="surname" {...register("surname")} />
-              {errors.surname && (
-                <p className="text-xs text-destructive mt-1">{errors.surname.message}</p>
-              )}
+              <Label>{t("auth.surname")} *</Label>
+              <Input {...register("surname")} />
+              {errors.surname && <p className="text-xs text-destructive">{errors.surname.message}</p>}
             </div>
           </div>
-
           <div>
-            <Label htmlFor="email">{t("auth.email")} *</Label>
-            <Input id="email" type="email" {...register("email")} disabled={!!user} />
-            {errors.email && (
-              <p className="text-xs text-destructive mt-1">{errors.email.message}</p>
-            )}
+            <Label>{t("auth.email")} *</Label>
+            <Input {...register("email")} disabled={!!user} className={user ? "bg-muted" : ""} />
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
-
           {!user && (
             <div>
-              <Label htmlFor="password">{t("auth.password")}</Label>
-              <Input id="password" type="password" {...register("password")} placeholder="Auto-generated if empty" />
-              {errors.password && (
-                <p className="text-xs text-destructive mt-1">{errors.password.message}</p>
-              )}
+              <Label>{t("auth.password")} (optional - auto-generated)</Label>
+              <Input type="password" {...register("password")} />
             </div>
           )}
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="phone">{t("profile.phone")}</Label>
-              <Input id="phone" {...register("phone")} />
-              {errors.phone && (
-                <p className="text-xs text-destructive mt-1">{errors.phone.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="title">{t("profile.title")}</Label>
-              <Input id="title" {...register("title")} />
-              {errors.title && (
-                <p className="text-xs text-destructive mt-1">{errors.title.message}</p>
-              )}
-            </div>
-          </div>
-
           <div>
-            <Label htmlFor="bio">{t("profile.bio")}</Label>
-            <Textarea id="bio" {...register("bio")} rows={2} />
-            {errors.bio && (
-              <p className="text-xs text-destructive mt-1">{errors.bio.message}</p>
-            )}
+            <Label>{t("profile.phone")}</Label>
+            <Input {...register("phone")} />
           </div>
-
+          <div>
+            <Label>{t("profile.title")}</Label>
+            <Input {...register("title")} />
+          </div>
+          <div>
+            <Label>{t("profile.bio")}</Label>
+            <Textarea {...register("bio")} rows={3} />
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="department">{t("admin.department")} *</Label>
-              <Select
-                onValueChange={(v) => setValue("department", v as DepartmentType)}
-                defaultValue={user?.department || "Other"}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
+              <Label>{t("admin.department")} *</Label>
+              <Select onValueChange={(v) => setValue("department", v as DepartmentType)} defaultValue={user?.department}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {["Management", "Mechanical", "Electrical", "Software", "Sales", "Logistics", "Finance", "Other"].map((dept) => (
-                    <SelectItem key={dept} value={dept}>
-                      {t(`departments.${dept}`)}
-                    </SelectItem>
+                  {["Management", "Mechanical", "Electrical", "Software", "Sales", "Logistics", "Finance", "Other"].map((d) => (
+                    <SelectItem key={d} value={d}>{t(`departments.${d}`)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {errors.department && (
-                <p className="text-xs text-destructive mt-1">{errors.department.message}</p>
-              )}
             </div>
-
             <div>
-              <Label htmlFor="global_role">{t("admin.role")} *</Label>
-              <Select
-                onValueChange={(v) => setValue("global_role", v as GlobalRole)}
-                defaultValue={user?.global_role || "Member"}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
+              <Label>{t("admin.role")} *</Label>
+              <Select onValueChange={(v) => setValue("global_role", v as GlobalRole)} defaultValue={user?.global_role}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {["Admin", "Manager", "TeamLead", "Member", "Viewer"].map((role) => (
-                    <SelectItem key={role} value={role}>
-                      {t(`roles.${role}`)}
-                    </SelectItem>
+                  {["Admin", "Manager", "TeamLead", "Member", "Viewer"].map((r) => (
+                    <SelectItem key={r} value={r}>{t(`roles.${r}`)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {errors.global_role && (
-                <p className="text-xs text-destructive mt-1">{errors.global_role.message}</p>
-              )}
             </div>
           </div>
-
           <div>
             <Label>{t("admin.skills")}</Label>
             <div className="flex gap-2 mb-2">
-              <Input
-                value={skillInput}
-                onChange={(e) => setSkillInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkill())}
-                placeholder="Add skill..."
-                maxLength={50}
-              />
-              <Button type="button" onClick={addSkill} variant="outline">
-                {t("common.add")}
-              </Button>
+              <Input value={skillInput} onChange={(e) => setSkillInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkill())} />
+              <Button type="button" onClick={addSkill} variant="secondary">{t("common.add")}</Button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <Badge key={skill} variant="secondary">
-                  {skill}
-                  <X className="h-3 w-3 ml-1 cursor-pointer" onClick={() => removeSkill(skill)} />
-                </Badge>
+              {skills.map((s) => (
+                <Badge key={s} variant="secondary">{s}<X className="h-3 w-3 ml-1 cursor-pointer" onClick={() => removeSkill(s)} /></Badge>
               ))}
             </div>
           </div>
-
-          <div className="flex gap-2 justify-end pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={loading}
-            >
-              {t("tasks.cancel")}
-            </Button>
+          <div className="flex justify-end gap-2 pt-4">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>{t("tasks.cancel")}</Button>
             <Button type="submit" disabled={loading}>
               {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
               {t("tasks.save")}
