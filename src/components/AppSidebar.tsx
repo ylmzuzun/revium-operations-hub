@@ -18,6 +18,7 @@ const mainItems = [
   { title: "Dashboard", url: "/", icon: Home },
   { title: "My Work", url: "/my-work", icon: CheckSquare },
   { title: "Tasks", url: "/tasks", icon: CheckSquare },
+  { title: "Task Pool", url: "/task-pool", icon: Users },
   { title: "Projects", url: "/projects", icon: Folder },
   { title: "Teams", url: "/teams", icon: Users },
   { title: "Calendar", url: "/calendar", icon: Calendar },

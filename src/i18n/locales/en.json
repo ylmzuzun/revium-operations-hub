@@ -356,6 +356,10 @@
     "pleaseEnterTaskTitle": "Please enter a task title",
     "taskCreatedSuccessfully": "Task created successfully",
     "taskUpdatedSuccessfully": "Task updated successfully",
+    "taskClaimed": "Task claimed successfully",
+    "view": "View",
+    "selected": "selected",
+    "noResults": "No results found",
     "profileUpdatedSuccessfully": "Profile updated successfully",
     "projectCreatedSuccessfully": "Project created successfully",
     "projectUpdatedSuccessfully": "Project updated successfully",
@@ -391,6 +395,10 @@
     "before": "Before",
     "after": "After",
     "metadata": "Metadata"
+  },
+  "taskPool": {
+    "subtitle": "Available tasks waiting to be claimed",
+    "noAvailableTasks": "No tasks available in the pool"
   },
   "reports": {
     "title": "Reports",

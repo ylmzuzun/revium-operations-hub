@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,10 +16,23 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Sparkles, X } from "lucide-react";
+import { Loader2, Sparkles, X, Check } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Database } from "@/integrations/supabase/types";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 type TaskType = Database["public"]["Enums"]["task_type"];
 type TaskStatus = Database["public"]["Enums"]["task_status"];
@@ -41,7 +54,7 @@ interface Profile {
 
 export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
   const { t } = useTranslation();
-  const { register, handleSubmit, watch, setValue } = useForm();
+  const { register, handleSubmit, watch, setValue, control } = useForm();
   const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [users, setUsers] = useState<Profile[]>([]);
@@ -50,6 +63,8 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
   const [skillInput, setSkillInput] = useState("");
   const [skillTags, setSkillTags] = useState<string[]>([]);
   const [sendEmail, setSendEmail] = useState(true);
+  const [selectedAssignees, setSelectedAssignees] = useState<string[]>([]);
+  const [assigneeOpen, setAssigneeOpen] = useState(false);
 
   const title = watch("title");
   const description = watch("description");
@@ -118,22 +133,42 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      const { error } = await supabase.from("tasks").insert({
-        title: formData.title,
-        description: formData.description || null,
-        type: formData.type || "Task",
-        status: formData.status || "To Do",
-        priority: formData.priority || "Medium",
-        project_id: formData.project_id || null,
-        assignee_id: formData.assignee_id || null,
-        start_date: formData.start_date || null,
-        due_date: formData.due_date || null,
-        estimate_hours: formData.estimate_hours ? parseFloat(formData.estimate_hours) : null,
-        skill_tags: skillTags.length > 0 ? skillTags : null,
-        created_by: user.id,
-      });
+      // Create the task
+      const { data: taskData, error: taskError } = await supabase
+        .from("tasks")
+        .insert({
+          title: formData.title,
+          description: formData.description || null,
+          type: formData.type || "Task",
+          status: formData.status || "To Do",
+          priority: formData.priority || "Medium",
+          project_id: formData.project_id || null,
+          assignee_id: selectedAssignees.length > 0 ? selectedAssignees[0] : null,
+          start_date: formData.start_date || null,
+          due_date: formData.due_date || null,
+          estimate_hours: formData.estimate_hours ? parseFloat(formData.estimate_hours) : null,
+          skill_tags: skillTags.length > 0 ? skillTags : null,
+          created_by: user.id,
+        })
+        .select()
+        .single();
 
-      if (error) throw error;
+      if (taskError) throw taskError;
+
+      // Add all assignees to task_assignees table
+      if (selectedAssignees.length > 0 && taskData) {
+        const assigneeInserts = selectedAssignees.map(assigneeId => ({
+          task_id: taskData.id,
+          assignee_id: assigneeId,
+          assigned_by: user.id,
+        }));
+
+        const { error: assigneeError } = await supabase
+          .from("task_assignees")
+          .insert(assigneeInserts);
+
+        if (assigneeError) throw assigneeError;
+      }
 
       toast({ title: t("common.success"), description: t("common.taskCreatedSuccessfully") });
       onSuccess?.();
@@ -266,7 +301,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
 
         <div>
           <div className="flex items-center justify-between mb-2">
-            <Label htmlFor="assignee_id">{t("tasks.assignee")}</Label>
+            <Label>{t("tasks.assignee")}</Label>
             <Button type="button" variant="outline" size="sm" onClick={getSuggestions} disabled={aiLoading}>
               {aiLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-1" />
@@ -276,18 +311,87 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
               {t("tasks.aiSuggestions")}
             </Button>
           </div>
-          <Select onValueChange={(v) => setValue("assignee_id", v)}>
-            <SelectTrigger>
-              <SelectValue placeholder={t("tasks.unassigned")} />
-            </SelectTrigger>
-            <SelectContent>
-              {users.map((u) => (
-                <SelectItem key={u.id} value={u.id}>
-                  {u.name} {u.surname} - {u.department}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Popover open={assigneeOpen} onOpenChange={setAssigneeOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                type="button"
+                className="w-full justify-between"
+              >
+                {selectedAssignees.length === 0
+                  ? t("common.selectMultiple")
+                  : `${selectedAssignees.length} ${t("common.selected")}`}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0">
+              <Command>
+                <CommandInput placeholder={t("common.search")} />
+                <CommandEmpty>{t("common.noResults")}</CommandEmpty>
+                <CommandGroup className="max-h-64 overflow-auto">
+                  {users.map((user) => (
+                    <CommandItem
+                      key={user.id}
+                      onSelect={() => {
+                        setSelectedAssignees((prev) =>
+                          prev.includes(user.id)
+                            ? prev.filter((id) => id !== user.id)
+                            : [...prev, user.id]
+                        );
+                      }}
+                    >
+                      <div className="flex items-center gap-2 flex-1">
+                        <Check
+                          className={cn(
+                            "h-4 w-4",
+                            selectedAssignees.includes(user.id)
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                        <Avatar className="h-6 w-6">
+                          <AvatarFallback className="text-xs">
+                            {user.name[0]}{user.surname[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <span className="text-sm">
+                            {user.name} {user.surname}
+                          </span>
+                          {user.skills && user.skills.length > 0 && (
+                            <p className="text-xs text-muted-foreground">
+                              {user.skills.slice(0, 2).join(", ")}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          
+          {selectedAssignees.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {selectedAssignees.map((id) => {
+                const user = users.find((u) => u.id === id);
+                return user ? (
+                  <Badge key={id} variant="secondary" className="gap-1">
+                    {user.name} {user.surname}
+                    <X
+                      className="h-3 w-3 cursor-pointer"
+                      onClick={() =>
+                        setSelectedAssignees((prev) =>
+                          prev.filter((uid) => uid !== id)
+                        )
+                      }
+                    />
+                  </Badge>
+                ) : null;
+              })}
+            </div>
+          )}
 
           {suggestions.length > 0 && (
             <Card className="mt-3">
@@ -299,7 +403,11 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
                   <div
                     key={user.id}
                     className="flex items-center justify-between p-2 rounded-md border cursor-pointer hover:bg-accent"
-                    onClick={() => setValue("assignee_id", user.id)}
+                    onClick={() => {
+                      if (!selectedAssignees.includes(user.id)) {
+                        setSelectedAssignees([...selectedAssignees, user.id]);
+                      }
+                    }}
                   >
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
