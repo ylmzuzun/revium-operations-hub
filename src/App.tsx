@@ -22,6 +22,7 @@ import Gantt from "./pages/Gantt";
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Logs from "./pages/Logs";
 import "./i18n/config";
 
 const queryClient = new QueryClient();
@@ -171,6 +172,16 @@ const App = () => (
                 <ProtectedRoute>
                   <MainLayout>
                     <Profile />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/logs"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <Logs />
                   </MainLayout>
                 </ProtectedRoute>
               }
