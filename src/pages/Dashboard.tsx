@@ -6,6 +6,9 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import { CheckSquare, Clock, AlertCircle, TrendingUp, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { formatDistanceToNow } from "date-fns";
 
 interface DashboardStats {
   myOpenTasks: number;
@@ -14,9 +17,37 @@ interface DashboardStats {
   criticalTasks: number;
 }
 
+interface ActivityLog {
+  id: string;
+  change_type: string;
+  field_name: string | null;
+  old_value: string | null;
+  new_value: string | null;
+  created_at: string;
+  changed_by_profile: {
+    name: string;
+    surname: string;
+  };
+  task: {
+    title: string;
+  };
+}
+
+interface StatusData {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface PriorityData {
+  name: string;
+  value: number;
+}
+
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [stats, setStats] = useState<DashboardStats>({
     myOpenTasks: 0,
     tasksCreated: 0,
@@ -24,6 +55,9 @@ const Dashboard = () => {
     criticalTasks: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [recentActivity, setRecentActivity] = useState<ActivityLog[]>([]);
+  const [statusData, setStatusData] = useState<StatusData[]>([]);
+  const [priorityData, setPriorityData] = useState<PriorityData[]>([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -63,6 +97,67 @@ const Dashboard = () => {
           openTasks: openCount || 0,
           criticalTasks: criticalCount || 0,
         });
+
+        // Fetch recent activity
+        const { data: activities } = await supabase
+          .from("activity_logs")
+          .select(`
+            id,
+            change_type,
+            field_name,
+            old_value,
+            new_value,
+            created_at,
+            changed_by_profile:profiles!activity_logs_changed_by_fkey(name, surname),
+            task:tasks!activity_logs_task_id_fkey(title)
+          `)
+          .order("created_at", { ascending: false })
+          .limit(10);
+
+        setRecentActivity((activities as any) || []);
+
+        // Fetch status distribution
+        const { data: statusCounts } = await supabase
+          .from("tasks")
+          .select("status");
+
+        const statusMap = new Map<string, number>();
+        statusCounts?.forEach((task) => {
+          statusMap.set(task.status, (statusMap.get(task.status) || 0) + 1);
+        });
+
+        const COLORS = {
+          Backlog: "hsl(var(--muted))",
+          "To Do": "hsl(var(--chart-1))",
+          "In Progress": "hsl(var(--chart-2))",
+          Done: "hsl(var(--chart-3))",
+          Canceled: "hsl(var(--chart-4))",
+        };
+
+        const statusChartData = Array.from(statusMap.entries()).map(([name, value]) => ({
+          name,
+          value,
+          color: COLORS[name as keyof typeof COLORS] || "hsl(var(--primary))",
+        }));
+
+        setStatusData(statusChartData);
+
+        // Fetch priority distribution
+        const { data: priorityCounts } = await supabase
+          .from("tasks")
+          .select("priority");
+
+        const priorityMap = new Map<string, number>();
+        priorityCounts?.forEach((task) => {
+          priorityMap.set(task.priority, (priorityMap.get(task.priority) || 0) + 1);
+        });
+
+        const priorityChartData = Array.from(priorityMap.entries()).map(([name, value]) => ({
+          name,
+          value,
+        }));
+
+        setPriorityData(priorityChartData);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       } finally {
@@ -146,37 +241,96 @@ const Dashboard = () => {
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>{t("dashboard.recentActivity")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground text-center py-8">
-              No recent activity
-            </p>
+            {recentActivity.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-8">
+                {t("dashboard.noRecentActivity")}
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {recentActivity.map((activity) => (
+                  <div key={activity.id} className="flex gap-3 text-sm">
+                    <div className="flex-1">
+                      <p className="font-medium">
+                        {activity.changed_by_profile.name} {activity.changed_by_profile.surname}
+                      </p>
+                      <p className="text-muted-foreground">
+                        {activity.change_type === "status_change" && activity.field_name
+                          ? `${t("dashboard.changedStatus")} "${activity.task.title}"`
+                          : activity.change_type === "assignment"
+                          ? `${t("dashboard.assignedTask")} "${activity.task.title}"`
+                          : `${t("dashboard.updated")} "${activity.task.title}"`}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Task Status Overview</CardTitle>
+            <CardTitle>{t("dashboard.taskStatusOverview")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Backlog</span>
-                <Badge variant="secondary">0</Badge>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">In Progress</span>
-                <Badge variant="secondary">0</Badge>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Done</span>
-                <Badge variant="secondary">0</Badge>
-              </div>
-            </div>
+            {statusData.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-8">
+                {t("dashboard.noData")}
+              </p>
+            ) : (
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={statusData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="hsl(var(--primary))"
+                    dataKey="value"
+                  >
+                    {statusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("dashboard.priorityDistribution")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {priorityData.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-8">
+              {t("dashboard.noData")}
+            </p>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={priorityData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="hsl(var(--primary))" name={t("dashboard.tasks")} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };
