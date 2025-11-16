@@ -124,6 +124,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
         priority: formData.priority || "Medium",
         project_id: formData.project_id || null,
         assignee_id: formData.assignee_id || null,
+        start_date: formData.start_date || null,
         due_date: formData.due_date || null,
         estimate_hours: formData.estimate_hours ? parseFloat(formData.estimate_hours) : null,
         skill_tags: skillTags.length > 0 ? skillTags : null,
@@ -223,14 +224,19 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="due_date">{t("tasks.dueDate")}</Label>
-            <Input id="due_date" type="date" {...register("due_date")} />
+            <Label htmlFor="start_date">{t("tasks.startDate")}</Label>
+            <Input id="start_date" type="date" {...register("start_date")} />
           </div>
 
           <div>
-            <Label htmlFor="estimate_hours">{t("tasks.estimateHours")}</Label>
-            <Input id="estimate_hours" type="number" step="0.5" {...register("estimate_hours")} />
+            <Label htmlFor="due_date">{t("tasks.dueDate")}</Label>
+            <Input id="due_date" type="date" {...register("due_date")} />
           </div>
+        </div>
+
+        <div>
+          <Label htmlFor="estimate_hours">{t("tasks.estimateHours")}</Label>
+          <Input id="estimate_hours" type="number" step="0.5" {...register("estimate_hours")} />
         </div>
 
         <div>

@@ -69,6 +69,7 @@
     "actualHours": "Actual (hours)",
     "skillTags": "Skill Tags",
     "description": "Description",
+    "startDate": "Start Date",
     "comments": "Comments",
     "activity": "Activity",
     "attachments": "Attachments",
@@ -298,5 +299,17 @@
     "noTasksOnDate": "No tasks on this date",
     "upcomingTasks": "Upcoming Tasks",
     "noUpcomingTasks": "No upcoming tasks"
+  },
+  "gantt": {
+    "title": "Gantt Chart",
+    "subtitle": "Project timeline and dependencies visualization",
+    "timeline": "Timeline",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "allProjects": "All Projects",
+    "noTasks": "No tasks with dates to display",
+    "legend": "Legend",
+    "legendDescription": "Double-click on a task to view details. Tasks are colored by priority, with completed tasks shown in green and blocked tasks in red."
   }
 }
