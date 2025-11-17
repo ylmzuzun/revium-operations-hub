@@ -139,10 +139,10 @@ const MyWork = () => {
             <p className="font-medium mb-2">{task.title}</p>
             <div className="flex items-center gap-2 flex-wrap">
               <Badge className={getStatusColor(task.status)} variant="outline">
-                {t(`tasks.status.${task.status}`)}
+                {t(`taskStatus.${task.status}`)}
               </Badge>
               <Badge className={getPriorityColor(task.priority)} variant="outline">
-                {t(`tasks.priority.${task.priority}`)}
+                {t(`taskPriority.${task.priority}`)}
               </Badge>
               {task.due_date && (
                 <span className="text-xs text-muted-foreground">
