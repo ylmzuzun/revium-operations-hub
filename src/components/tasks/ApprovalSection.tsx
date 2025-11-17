@@ -45,7 +45,7 @@ interface ApprovalAction {
   approver: {
     name: string;
     surname: string;
-  };
+  } | null;
 }
 
 interface ApprovalSectionProps {
@@ -398,7 +398,7 @@ export const ApprovalSection = ({ taskId, taskStatus, canRequestApproval }: Appr
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
                           <p className="text-sm font-medium">
-                            {action.approver.name} {action.approver.surname}
+                            {action.approver?.name || t("common.unknown")} {action.approver?.surname || ""}
                           </p>
                           <Badge variant="outline">{getLevelLabel(action.level)}</Badge>
                         </div>
