@@ -142,7 +142,8 @@ export const PendingApprovalsWidget = () => {
     try {
       setSubmitting(true);
 
-      const { error } = await supabase.from("task_approval_actions").insert({
+      // Insert approval action
+      const { error: actionError } = await supabase.from("task_approval_actions").insert({
         approval_id: selectedApproval.id,
         approver_id: user.id,
         level: selectedApproval.current_level as any,
@@ -150,7 +151,28 @@ export const PendingApprovalsWidget = () => {
         comments: comments || null,
       });
 
-      if (error) throw error;
+      if (actionError) throw actionError;
+
+      // Update the approval as complete
+      const { error: approvalError } = await supabase
+        .from("task_approvals")
+        .update({
+          is_complete: true,
+          final_status: actionType as any,
+          completed_at: new Date().toISOString(),
+        })
+        .eq("id", selectedApproval.id);
+
+      if (approvalError) throw approvalError;
+
+      // Update task status based on action
+      const newTaskStatus = actionType === "APPROVED" ? "Done" : "In Progress";
+      const { error: taskError } = await supabase
+        .from("tasks")
+        .update({ status: newTaskStatus as any })
+        .eq("id", selectedApproval.task_id);
+
+      if (taskError) throw taskError;
 
       toast.success(
         actionType === "APPROVED"
@@ -353,7 +375,12 @@ export const PendingApprovalsWidget = () => {
                   : "bg-red-600 hover:bg-red-700"
               }
             >
-              {submitting ? t("common.submitting") : t("common.confirm")}
+              {submitting 
+                ? t("common.submitting") 
+                : actionType === "APPROVED" 
+                  ? t("common.approve")
+                  : t("common.reject")
+              }
             </Button>
           </DialogFooter>
         </DialogContent>

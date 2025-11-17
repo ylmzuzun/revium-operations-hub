@@ -383,10 +383,21 @@
   },
   "approval": {
     "pendingApprovals": "Bekleyen Onaylar",
+    "noPendingApprovals": "Bekleyen onay yok",
     "requestedBy": "Talep Eden",
-    "confirmApprove": "Bu görevi onaylamak istediğinizden emin misiniz?",
+    "confirmApprove": "Onayı Onayla",
+    "confirmReject": "Reddetmeyi Onayla",
+    "currentLevel": "Mevcut Seviye",
     "comments": "Yorumlar",
-    "commentsPlaceholder": "Yorumlarınızı ekleyin (opsiyonel)"
+    "commentsPlaceholder": "Yorumlarınızı ekleyin (opsiyonel)",
+    "success": {
+      "approved": "Görev başarıyla onaylandı",
+      "rejected": "Görev başarıyla reddedildi"
+    },
+    "error": {
+      "fetchFailed": "Bekleyen onaylar yüklenemedi",
+      "actionFailed": "Onay işlemi başarısız oldu"
+    }
   },
   "logs": {
     "title": "Sistem Günlükleri",
