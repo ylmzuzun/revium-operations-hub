@@ -72,6 +72,8 @@
     "uploading": "Uploading...",
     "optional": "optional",
     "unknown": "Unknown",
+    "showingAll": "Showing All",
+    "showingMine": "Showing Mine",
     "taskAssignedToYou": "Task assigned to you",
     "commentEmpty": "Comment cannot be empty",
     "commentTooLong": "Comment too long (max 5000 characters)",

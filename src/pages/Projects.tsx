@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { useUserRole } from "@/hooks/useUserRole";
+import { Eye, EyeOff } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,6 +36,8 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<any>(null);
+  const { isAdminOrManager } = useUserRole();
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -161,9 +165,21 @@ const Projects = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{t("projects.title")}</h1>
-          <p className="text-muted-foreground mt-1">{t("projects.subtitle")}</p>
+        <div className="flex items-center gap-3">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">{t("projects.title")}</h1>
+            <p className="text-muted-foreground mt-1">{t("projects.subtitle")}</p>
+          </div>
+          {isAdminOrManager && (
+            <Badge 
+              variant={showAll ? "default" : "outline"} 
+              className="cursor-pointer h-8 px-3"
+              onClick={() => setShowAll(!showAll)}
+            >
+              {showAll ? <Eye className="h-3 w-3 mr-1" /> : <EyeOff className="h-3 w-3 mr-1" />}
+              {showAll ? t("common.showingAll") : t("common.showingMine")}
+            </Badge>
+          )}
         </div>
         <Button onClick={handleAddClick}>
           <Plus className="h-4 w-4 mr-2" />

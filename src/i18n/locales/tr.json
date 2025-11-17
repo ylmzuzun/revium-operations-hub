@@ -72,6 +72,8 @@
     "uploading": "Yükleniyor...",
     "optional": "opsiyonel",
     "unknown": "Bilinmeyen",
+    "showingAll": "Tümü Gösteriliyor",
+    "showingMine": "Benimkiler Gösteriliyor",
     "taskAssignedToYou": "Görev size atandı",
     "commentEmpty": "Yorum boş olamaz",
     "commentTooLong": "Yorum çok uzun (maksimum 5000 karakter)",
