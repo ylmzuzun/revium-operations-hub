@@ -217,10 +217,10 @@ const TaskPool = () => {
                 
                 <div className="flex flex-wrap gap-2">
                   <Badge className={getPriorityColor(task.priority)} variant="outline">
-                    {t(`tasks.priority.${task.priority}`)}
+                    {t(`taskPriority.${task.priority}`)}
                   </Badge>
                   <Badge className={getTypeColor(task.type)} variant="outline">
-                    {t(`tasks.type.${task.type}`)}
+                    {t(`taskType.${task.type}`)}
                   </Badge>
                 </div>
 

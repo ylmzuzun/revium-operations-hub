@@ -335,10 +335,10 @@ const TeamDetail = () => {
                     <p className="font-medium">{task.title}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <Badge className={getStatusColor(task.status)} variant="outline">
-                        {t(`tasks.status.${task.status}`)}
+                        {t(`taskStatus.${task.status}`)}
                       </Badge>
                       <Badge className={getPriorityColor(task.priority)} variant="outline">
-                        {t(`tasks.priority.${task.priority}`)}
+                        {t(`taskPriority.${task.priority}`)}
                       </Badge>
                       {task.assignee && (
                         <span className="text-sm text-muted-foreground">
