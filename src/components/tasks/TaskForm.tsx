@@ -42,6 +42,7 @@ type DepartmentType = Database["public"]["Enums"]["department_type"];
 interface TaskFormProps {
   onSuccess?: () => void;
   onCancel?: () => void;
+  initialDate?: Date;
 }
 
 interface Profile {
@@ -52,7 +53,7 @@ interface Profile {
   skills: string[] | null;
 }
 
-export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
+export const TaskForm = ({ onSuccess, onCancel, initialDate }: TaskFormProps) => {
   const { t } = useTranslation();
   const { register, handleSubmit, watch, setValue, control } = useForm();
   const [loading, setLoading] = useState(false);
@@ -76,6 +77,14 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
     fetchUsers();
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    if (initialDate) {
+      const dateStr = initialDate.toISOString().split('T')[0];
+      setValue("start_date", dateStr);
+      setValue("due_date", dateStr);
+    }
+  }, [initialDate, setValue]);
 
   const fetchUsers = async () => {
     const { data } = await supabase
