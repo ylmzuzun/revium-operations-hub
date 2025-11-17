@@ -110,7 +110,7 @@ export function GlobalSearch() {
         supabase
           .from("profiles")
           .select("id,name,surname,global_role,department")
-          .or(`name.ilike.${filter},surname.ilike.${filter},email.ilike.${filter}`)
+          .or(`name.ilike.${filter},surname.ilike.${filter}`)
           .limit(5),
         supabase
           .from("teams")

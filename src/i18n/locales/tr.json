@@ -381,6 +381,13 @@
     "noNotifications": "Bildirim yok",
     "markRead": "Okundu işaretle"
   },
+  "approval": {
+    "pendingApprovals": "Bekleyen Onaylar",
+    "requestedBy": "Talep Eden",
+    "confirmApprove": "Bu görevi onaylamak istediğinizden emin misiniz?",
+    "comments": "Yorumlar",
+    "commentsPlaceholder": "Yorumlarınızı ekleyin (opsiyonel)"
+  },
   "logs": {
     "title": "Sistem Günlükleri",
     "subtitle": "Tüm sistem aktivitelerinin denetim izi",
