@@ -105,6 +105,9 @@ export const AttachmentSection = ({ taskId }: AttachmentSectionProps) => {
     if (!attachment) return;
 
     try {
+      // Optimistically update UI
+      setAttachments((prev) => prev.filter((a) => a.id !== deleteId));
+      
       // Delete from storage using the stored file path
       const { error: storageError } = await supabase.storage
         .from("task-attachments")
@@ -123,14 +126,14 @@ export const AttachmentSection = ({ taskId }: AttachmentSectionProps) => {
         title: t("common.success"),
         description: t("tasks.fileDeleted"),
       });
-
-      fetchAttachments();
     } catch (error: any) {
       toast({
         title: t("common.error"),
         description: error.message,
         variant: "destructive",
       });
+      // Refetch on error to restore correct state
+      fetchAttachments();
     } finally {
       setDeleteId(null);
     }
