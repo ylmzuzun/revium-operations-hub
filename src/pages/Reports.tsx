@@ -186,29 +186,29 @@ const Reports = () => {
 
       // Task Trends Sheet
       const trendsWS = XLSX.utils.json_to_sheet(
-        taskTrends.map(t => ({
-          [t("reports.week")]: t.week,
-          [t("reports.completedTasks")]: t.completed
+        taskTrends.map(trend => ({
+          [t("reports.week")]: trend.week,
+          [t("reports.completedTasks")]: trend.completed
         }))
       );
       XLSX.utils.book_append_sheet(wb, trendsWS, t("reports.taskCompletionTrends"));
 
       // Workload Distribution Sheet
       const workloadWS = XLSX.utils.json_to_sheet(
-        workloadData.map(w => ({
-          [t("reports.userName")]: w.userName,
-          [t("reports.taskCount")]: w.taskCount
+        workloadData.map(workload => ({
+          [t("reports.userName")]: workload.userName,
+          [t("reports.taskCount")]: workload.taskCount
         }))
       );
       XLSX.utils.book_append_sheet(wb, workloadWS, t("reports.workloadDistribution"));
 
       // Team Performance Sheet
       const teamWS = XLSX.utils.json_to_sheet(
-        teamPerformance.map(tp => ({
-          [t("reports.teamName")]: tp.teamName,
-          [t("reports.totalTasks")]: tp.totalTasks,
-          [t("reports.completedTasks")]: tp.completedTasks,
-          [t("reports.completionRate")]: `${tp.completionRate}%`
+        teamPerformance.map(team => ({
+          [t("reports.teamName")]: team.teamName,
+          [t("reports.totalTasks")]: team.totalTasks,
+          [t("reports.completedTasks")]: team.completedTasks,
+          [t("reports.completionRate")]: `${team.completionRate}%`
         }))
       );
       XLSX.utils.book_append_sheet(wb, teamWS, t("reports.teamPerformance"));

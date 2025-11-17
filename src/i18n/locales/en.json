@@ -381,6 +381,13 @@
     "noNotifications": "No notifications",
     "markRead": "Mark as read"
   },
+  "approval": {
+    "pendingApprovals": "Pending Approvals",
+    "requestedBy": "Requested By",
+    "confirmApprove": "Are you sure you want to approve this task?",
+    "comments": "Comments",
+    "commentsPlaceholder": "Add your comments (optional)"
+  },
   "logs": {
     "title": "System Logs",
     "subtitle": "Complete audit trail of all system activities",
