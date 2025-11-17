@@ -100,6 +100,7 @@
     "type": "Type",
     "project": "Project",
     "dueDate": "Due Date",
+    "endTime": "End Time",
     "estimateHours": "Estimate (hours)",
     "actualHours": "Actual (hours)",
     "skillTags": "Skill Tags",
@@ -125,7 +126,9 @@
     "uploadFile": "Upload File",
     "noAttachments": "No attachments yet",
     "fileUploaded": "File uploaded successfully",
+    "fileDeleted": "File deleted successfully",
     "downloadFile": "Download",
+    "deleteFile": "Delete",
     "deleteFile": "Delete",
     "dependencies": {
       "title": "Dependencies",

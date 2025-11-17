@@ -100,6 +100,7 @@
     "type": "Tür",
     "project": "Proje",
     "dueDate": "Bitiş Tarihi",
+    "endTime": "Bitiş Saati",
     "estimateHours": "Tahmini Süre (saat)",
     "actualHours": "Gerçekleşen (saat)",
     "skillTags": "Yetenek Etiketleri",
@@ -125,7 +126,9 @@
     "uploadFile": "Dosya Yükle",
     "noAttachments": "Henüz ek yok",
     "fileUploaded": "Dosya başarıyla yüklendi",
+    "fileDeleted": "Dosya başarıyla silindi",
     "downloadFile": "İndir",
+    "deleteFile": "Sil",
     "deleteFile": "Sil",
     "dependencies": {
       "title": "Bağımlılıklar",

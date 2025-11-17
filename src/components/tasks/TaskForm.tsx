@@ -146,7 +146,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
           assignee_id: selectedAssignees.length > 0 ? selectedAssignees[0] : null,
           start_date: formData.start_date || null,
           due_date: formData.due_date || null,
-          estimate_hours: formData.estimate_hours ? parseFloat(formData.estimate_hours) : null,
+          end_time: formData.end_time || null,
           skill_tags: skillTags.length > 0 ? skillTags : null,
           created_by: user.id,
         })
@@ -272,8 +272,8 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
         </div>
 
         <div>
-          <Label htmlFor="estimate_hours">{t("tasks.estimateHours")}</Label>
-          <Input id="estimate_hours" type="number" step="0.5" {...register("estimate_hours")} />
+          <Label htmlFor="end_time">{t("tasks.endTime")}</Label>
+          <Input id="end_time" type="time" {...register("end_time")} />
         </div>
 
         <div>
@@ -301,7 +301,7 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
 
         <div>
           <div className="flex items-center justify-between mb-2">
-            <Label>{t("tasks.assignee")}</Label>
+            <Label>{t("tasks.assignee")} <span className="text-muted-foreground text-xs">({t("common.optional")})</span></Label>
             <Button type="button" variant="outline" size="sm" onClick={getSuggestions} disabled={aiLoading}>
               {aiLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-1" />
@@ -320,11 +320,11 @@ export const TaskForm = ({ onSuccess, onCancel }: TaskFormProps) => {
                 className="w-full justify-between"
               >
                 {selectedAssignees.length === 0
-                  ? t("common.selectMultiple")
+                  ? t("tasks.unassigned")
                   : `${selectedAssignees.length} ${t("common.selected")}`}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-full p-0">
+            <PopoverContent className="w-full p-0 z-50 bg-popover" align="start">
               <Command>
                 <CommandInput placeholder={t("common.search")} />
                 <CommandEmpty>{t("common.noResults")}</CommandEmpty>
