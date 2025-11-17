@@ -383,10 +383,21 @@
   },
   "approval": {
     "pendingApprovals": "Pending Approvals",
+    "noPendingApprovals": "No pending approvals",
     "requestedBy": "Requested By",
-    "confirmApprove": "Are you sure you want to approve this task?",
+    "confirmApprove": "Confirm Approval",
+    "confirmReject": "Confirm Rejection",
+    "currentLevel": "Current Level",
     "comments": "Comments",
-    "commentsPlaceholder": "Add your comments (optional)"
+    "commentsPlaceholder": "Add your comments (optional)",
+    "success": {
+      "approved": "Task approved successfully",
+      "rejected": "Task rejected successfully"
+    },
+    "error": {
+      "fetchFailed": "Failed to fetch pending approvals",
+      "actionFailed": "Failed to process approval action"
+    }
   },
   "logs": {
     "title": "System Logs",
