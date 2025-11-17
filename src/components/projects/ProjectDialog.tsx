@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, X } from "lucide-react";
 import { Database } from "@/integrations/supabase/types";
@@ -35,7 +36,6 @@ const projectSchema = z.object({
   description: z.string().trim().max(2000, "Description too long").optional(),
   status: z.enum(["Planned", "In Progress", "On Hold", "Completed"]),
   priority: z.enum(["Low", "Medium", "High", "Critical"]),
-  owner_id: z.string().uuid().optional(),
   start_date: z.string().optional(),
   end_date: z.string().optional(),
 });
@@ -54,6 +54,7 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<any[]>([]);
+  const [selectedOwners, setSelectedOwners] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
 
@@ -77,13 +78,14 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
       setValue("description", project.description || "");
       setValue("status", project.status);
       setValue("priority", project.priority);
-      setValue("owner_id", project.owner_id || "");
       setValue("start_date", project.start_date || "");
       setValue("end_date", project.end_date || "");
       setTags(project.tags || []);
+      fetchProjectOwners(project.id);
     } else {
       reset();
       setTags([]);
+      setSelectedOwners([]);
       setValue("status", "Planned");
       setValue("priority", "Medium");
     }
@@ -95,6 +97,24 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
       .select("id, name, surname")
       .eq("is_active", true);
     if (data) setUsers(data);
+  };
+
+  const fetchProjectOwners = async (projectId: string) => {
+    const { data } = await supabase
+      .from("project_owners")
+      .select("owner_id")
+      .eq("project_id", projectId);
+    if (data) {
+      setSelectedOwners(data.map((po) => po.owner_id));
+    }
+  };
+
+  const toggleOwner = (ownerId: string) => {
+    setSelectedOwners((prev) =>
+      prev.includes(ownerId)
+        ? prev.filter((id) => id !== ownerId)
+        : [...prev, ownerId]
+    );
   };
 
   const addTag = () => {
@@ -114,36 +134,63 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
     try {
       if (project) {
         // Update existing project
-        const { error } = await supabase
+        const { error: updateError } = await supabase
           .from("projects")
           .update({
             name: data.name,
             description: data.description || null,
             status: data.status,
             priority: data.priority,
-            owner_id: data.owner_id || null,
             start_date: data.start_date || null,
             end_date: data.end_date || null,
             tags: tags.length > 0 ? tags : null,
           })
           .eq("id", project.id);
 
-        if (error) throw error;
+        if (updateError) throw updateError;
+
+        // Update project owners
+        await supabase.from("project_owners").delete().eq("project_id", project.id);
+        if (selectedOwners.length > 0) {
+          const { error: ownersError } = await supabase.from("project_owners").insert(
+            selectedOwners.map((ownerId) => ({
+              project_id: project.id,
+              owner_id: ownerId,
+            }))
+          );
+          if (ownersError) throw ownersError;
+        }
+
         toast({ title: t("common.success"), description: t("common.projectUpdatedSuccessfully") });
       } else {
         // Create new project
-        const { error } = await supabase.from("projects").insert({
-          name: data.name,
-          description: data.description || null,
-          status: data.status,
-          priority: data.priority,
-          owner_id: data.owner_id || null,
-          start_date: data.start_date || null,
-          end_date: data.end_date || null,
-          tags: tags.length > 0 ? tags : null,
-        });
+        const { data: newProject, error: insertError } = await supabase
+          .from("projects")
+          .insert({
+            name: data.name,
+            description: data.description || null,
+            status: data.status,
+            priority: data.priority,
+            start_date: data.start_date || null,
+            end_date: data.end_date || null,
+            tags: tags.length > 0 ? tags : null,
+          })
+          .select()
+          .single();
 
-        if (error) throw error;
+        if (insertError) throw insertError;
+
+        // Add project owners
+        if (selectedOwners.length > 0 && newProject) {
+          const { error: ownersError } = await supabase.from("project_owners").insert(
+            selectedOwners.map((ownerId) => ({
+              project_id: newProject.id,
+              owner_id: ownerId,
+            }))
+          );
+          if (ownersError) throw ownersError;
+        }
+
         toast({ title: t("common.success"), description: t("common.projectCreatedSuccessfully") });
       }
 
@@ -151,6 +198,7 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
       onOpenChange(false);
       reset();
       setTags([]);
+      setSelectedOwners([]);
     } catch (error: any) {
       console.error("Project operation error:", error);
       toast({
@@ -228,22 +276,33 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
           </div>
 
           <div>
-            <Label htmlFor="owner_id">{t("projects.owner")}</Label>
-            <Select
-              onValueChange={(v) => setValue("owner_id", v)}
-              defaultValue={project?.owner_id || ""}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select owner" />
-              </SelectTrigger>
-              <SelectContent>
-                {users.map((u) => (
-                  <SelectItem key={u.id} value={u.id}>
-                    {u.name} {u.surname}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Label>{t("projects.owners")}</Label>
+            <div className="border rounded-md p-3 max-h-48 overflow-y-auto space-y-2">
+              {users.length === 0 ? (
+                <p className="text-sm text-muted-foreground">{t("common.loading")}</p>
+              ) : (
+                users.map((user) => (
+                  <div key={user.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`owner-${user.id}`}
+                      checked={selectedOwners.includes(user.id)}
+                      onCheckedChange={() => toggleOwner(user.id)}
+                    />
+                    <Label
+                      htmlFor={`owner-${user.id}`}
+                      className="text-sm font-normal cursor-pointer"
+                    >
+                      {user.name} {user.surname}
+                    </Label>
+                  </div>
+                ))
+              )}
+            </div>
+            {selectedOwners.length > 0 && (
+              <p className="text-xs text-muted-foreground mt-1">
+                {selectedOwners.length} {selectedOwners.length === 1 ? t("projects.owner").toLowerCase() : t("projects.owners").toLowerCase()} {t("common.selected")}
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -265,7 +324,7 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                placeholder="Add tag..."
+                placeholder={t("projects.addTagPlaceholder")}
                 maxLength={50}
               />
               <Button type="button" onClick={addTag} variant="outline">

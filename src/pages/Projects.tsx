@@ -91,7 +91,8 @@ const Projects = () => {
       (project) =>
         project.name.toLowerCase().includes(query) ||
         project.description?.toLowerCase().includes(query) ||
-        project.status.toLowerCase().includes(query)
+        project.status.toLowerCase().includes(query) ||
+        project.tags?.some((tag: string) => tag.toLowerCase().includes(query))
     );
     setFilteredProjects(filtered);
   };
