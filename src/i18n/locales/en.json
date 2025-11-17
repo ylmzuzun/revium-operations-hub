@@ -38,6 +38,10 @@
     "exportPNG": "Export PNG",
     "customDateRange": "Custom Date Range",
     "selectDateRange": "Select Date Range",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "export": "Export",
+    "exporting": "Exporting...",
     "addTask": "Add Task",
     "addProject": "Add Project",
     "searchPlaceholder": "Search…",
@@ -427,8 +431,11 @@
     "completedTasks": "Completed Tasks",
     "taskCount": "Task Count",
     "teamName": "Team Name",
+    "userName": "User Name",
+    "week": "Week",
     "totalTasks": "Total Tasks",
     "completionRate": "Completion Rate",
+    "exportSuccess": "Report exported successfully",
     "noData": "No data available"
   },
   "calendar": {

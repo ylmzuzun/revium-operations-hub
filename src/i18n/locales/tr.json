@@ -38,6 +38,10 @@
     "exportPNG": "PNG İndir",
     "customDateRange": "Özel Tarih Aralığı",
     "selectDateRange": "Tarih Aralığı Seç",
+    "startDate": "Başlangıç Tarihi",
+    "endDate": "Bitiş Tarihi",
+    "export": "Dışa Aktar",
+    "exporting": "Dışa aktarılıyor...",
     "addTask": "Görev Ekle",
     "addProject": "Proje Ekle",
     "searchPlaceholder": "Ara…",
@@ -427,8 +431,11 @@
     "completedTasks": "Tamamlanan Görevler",
     "taskCount": "Görev Sayısı",
     "teamName": "Takım Adı",
+    "userName": "Kullanıcı Adı",
+    "week": "Hafta",
     "totalTasks": "Toplam Görev",
     "completionRate": "Tamamlanma Oranı",
+    "exportSuccess": "Rapor başarıyla dışa aktarıldı",
     "noData": "Veri yok"
   },
   "calendar": {
