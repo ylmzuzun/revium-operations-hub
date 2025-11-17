@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -32,7 +34,9 @@ import { format } from "@/lib/dateUtils";
 
 const Admin = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { profile } = useAuth();
+  const { isAdminOrManager, loading: roleLoading } = useUserRole();
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,8 +47,21 @@ const Admin = () => {
   const [alertAction, setAlertAction] = useState<"activate" | "deactivate">("deactivate");
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (!roleLoading && !isAdminOrManager) {
+      toast({
+        title: t("common.error"),
+        description: t("common.noPermission"),
+        variant: "destructive",
+      });
+      navigate("/");
+    }
+  }, [roleLoading, isAdminOrManager, navigate, t]);
+
+  useEffect(() => {
+    if (isAdminOrManager) {
+      fetchUsers();
+    }
+  }, [isAdminOrManager]);
 
   useEffect(() => {
     filterUsers();

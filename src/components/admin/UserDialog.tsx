@@ -55,6 +55,7 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
   const [loading, setLoading] = useState(false);
   const [skillInput, setSkillInput] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
+  const [generatedPassword, setGeneratedPassword] = useState<string | null>(null);
 
   const {
     register,
@@ -77,9 +78,11 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
       setValue("department", user.department);
       setValue("global_role", user.global_role);
       setSkills(user.skills || []);
+      setGeneratedPassword(null);
     } else {
       reset();
       setSkills([]);
+      setGeneratedPassword(null);
     }
   }, [user, setValue, reset]);
 
@@ -156,13 +159,45 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
     }
   };
 
+  const handleClose = () => {
+    onOpenChange(false);
+    setGeneratedPassword(null);
+    reset();
+    setSkills([]);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{user ? t("admin.editUser") : t("admin.newUser")}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        
+        {generatedPassword ? (
+          <div className="space-y-4">
+            <div className="bg-muted p-4 rounded-lg space-y-2">
+              <p className="text-sm font-medium">{t("admin.userCreatedSuccess")}</p>
+              <p className="text-xs text-muted-foreground">{t("admin.passwordInfo")}</p>
+              <div className="flex items-center gap-2">
+                <Input value={generatedPassword} readOnly className="font-mono" />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    navigator.clipboard.writeText(generatedPassword);
+                    toast({ title: t("common.success"), description: t("admin.passwordCopied") });
+                  }}
+                >
+                  {t("common.copy")}
+                </Button>
+              </div>
+            </div>
+            <Button type="button" onClick={handleClose} className="w-full">
+              {t("common.close")}
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>{t("auth.name")} *</Label>
@@ -234,14 +269,17 @@ export const UserDialog = ({ open, onOpenChange, user, onSuccess }: UserDialogPr
               ))}
             </div>
           </div>
-          <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>{t("tasks.cancel")}</Button>
-            <Button type="submit" disabled={loading}>
-              {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-              {t("tasks.save")}
-            </Button>
-          </div>
-        </form>
+            <div className="flex justify-end gap-2">
+              <Button type="button" variant="outline" onClick={handleClose}>
+                {t("common.cancel")}
+              </Button>
+              <Button type="submit" disabled={loading}>
+                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {t("common.save")}
+              </Button>
+            </div>
+          </form>
+        )}
       </DialogContent>
     </Dialog>
   );
