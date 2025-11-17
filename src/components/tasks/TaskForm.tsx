@@ -335,7 +335,7 @@ export const TaskForm = ({ onSuccess, onCancel, initialDate }: TaskFormProps) =>
             </PopoverTrigger>
             <PopoverContent className="w-full p-0 z-50 bg-popover" align="start">
               <Command>
-                <CommandInput placeholder={t("common.search")} />
+                <CommandInput placeholder={t("common.searchPlaceholder")} />
                 <CommandEmpty>{t("common.noResults")}</CommandEmpty>
                 <CommandGroup className="max-h-64 overflow-auto">
                   {users.map((user) => (

@@ -1,6 +1,5 @@
-import { Search, User } from "lucide-react";
+import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { NotificationPopover } from "./notifications/NotificationPopover";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { GlobalSearch } from "./GlobalSearch";
 import { useTranslation } from "react-i18next";
 
 export function AppHeader() {
@@ -36,14 +36,7 @@ export function AppHeader() {
       <SidebarTrigger />
       
       <div className="flex-1 max-w-md">
-        <div className="relative">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder={t("common.search")}
-            className="pl-8"
-          />
-        </div>
+        <GlobalSearch />
       </div>
 
       <div className="flex items-center gap-2">
@@ -61,9 +54,6 @@ export function AppHeader() {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate("/profile")}>
               {t("common.profile")}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate("/settings")}>
-              {t("common.settings")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>
