@@ -71,6 +71,7 @@
     "cancel": "İptal",
     "uploading": "Yükleniyor...",
     "optional": "opsiyonel",
+    "unknown": "Bilinmeyen",
     "taskAssignedToYou": "Görev size atandı",
     "commentEmpty": "Yorum boş olamaz",
     "commentTooLong": "Yorum çok uzun (maksimum 5000 karakter)",

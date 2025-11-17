@@ -71,6 +71,7 @@
     "cancel": "Cancel",
     "uploading": "Uploading...",
     "optional": "optional",
+    "unknown": "Unknown",
     "taskAssignedToYou": "Task assigned to you",
     "commentEmpty": "Comment cannot be empty",
     "commentTooLong": "Comment too long (max 5000 characters)",
