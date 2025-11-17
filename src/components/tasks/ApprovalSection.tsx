@@ -33,7 +33,7 @@ interface ApprovalData {
   requester: {
     name: string;
     surname: string;
-  };
+  } | null;
 }
 
 interface ApprovalAction {
@@ -359,7 +359,7 @@ export const ApprovalSection = ({ taskId, taskStatus, canRequestApproval }: Appr
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm font-medium">
-                    {t("tasks.approval.requestedBy")} {approval.requester.name} {approval.requester.surname}
+                    {t("tasks.approval.requestedBy")} {approval.requester?.name || t("common.unknown")} {approval.requester?.surname || ""}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {format(new Date(approval.requested_at), "MMM dd, yyyy HH:mm")}
