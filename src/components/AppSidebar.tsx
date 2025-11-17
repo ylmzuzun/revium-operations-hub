@@ -1,6 +1,7 @@
 import { Home, CheckSquare, Folder, Users, BarChart3, Settings, Building2, Calendar, GanttChartSquare, FileText } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sidebar,
   SidebarContent,
@@ -34,6 +35,8 @@ const secondaryItems = [
 export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
+  const { profile } = useAuth();
+  const isAdmin = profile?.global_role === "Admin";
   const currentPath = location.pathname;
 
   const isActive = (path: string) => {
@@ -80,7 +83,9 @@ export function AppSidebar() {
           <SidebarGroupLabel>More</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {secondaryItems.map((item) => (
+              {secondaryItems
+                .filter((item) => item.url !== "/logs" || isAdmin)
+                .map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={isActive(item.url)}>
                     <NavLink to={item.url}>

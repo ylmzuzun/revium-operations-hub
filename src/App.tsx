@@ -180,7 +180,7 @@ const App = () => (
             <Route
               path="/logs"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute allowedRoles={["Admin"]}>
                   <MainLayout>
                     <Logs />
                   </MainLayout>

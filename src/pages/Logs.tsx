@@ -30,6 +30,7 @@ import { Search, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SystemLog {
   id: string;
@@ -49,6 +50,7 @@ interface SystemLog {
 
 const Logs = () => {
   const { t } = useTranslation();
+  const { profile } = useAuth();
   const [logs, setLogs] = useState<SystemLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -151,6 +153,14 @@ const Logs = () => {
       </div>
     );
   };
+
+  if (profile && profile.global_role !== "Admin") {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center rounded-lg border bg-card p-12 text-center text-muted-foreground">
+        {t("common.noPermission")}
+      </div>
+    );
+  }
 
   if (loading) {
     return (
