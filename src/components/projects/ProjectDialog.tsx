@@ -47,9 +47,10 @@ interface ProjectDialogProps {
   onOpenChange: (open: boolean) => void;
   project?: any;
   onSuccess: () => void;
+  initialDate?: Date;
 }
 
-export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: ProjectDialogProps) => {
+export const ProjectDialog = ({ open, onOpenChange, project, onSuccess, initialDate }: ProjectDialogProps) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -71,6 +72,14 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSuccess }: Projec
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (initialDate && !project) {
+      const dateStr = initialDate.toISOString().split('T')[0];
+      setValue("start_date", dateStr);
+      setValue("end_date", dateStr);
+    }
+  }, [initialDate, project, setValue]);
 
   useEffect(() => {
     if (project) {

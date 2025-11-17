@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/lib/supabase";
 import { isSameDay, startOfMonth, endOfMonth } from "date-fns";
 import { format } from "@/lib/dateUtils";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { TaskForm } from "@/components/tasks/TaskForm";
+import { ProjectDialog } from "@/components/projects/ProjectDialog";
+import { Plus } from "lucide-react";
 
 interface Task {
   id: string;
@@ -28,6 +33,8 @@ const Calendar = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  const [isTaskDialogOpen, setIsTaskDialogOpen] = useState(false);
+  const [isProjectDialogOpen, setIsProjectDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchTasks();
@@ -144,7 +151,18 @@ const Calendar = () => {
               {format(selectedDate, "MMMM d, yyyy")}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
+            <div className="flex gap-2">
+              <Button onClick={() => setIsTaskDialogOpen(true)} size="sm" className="flex-1">
+                <Plus className="h-4 w-4 mr-2" />
+                {t("common.addTask")}
+              </Button>
+              <Button onClick={() => setIsProjectDialogOpen(true)} size="sm" variant="outline" className="flex-1">
+                <Plus className="h-4 w-4 mr-2" />
+                {t("common.addProject")}
+              </Button>
+            </div>
+
             {selectedDateTasks.length === 0 ? (
               <p className="text-sm text-muted-foreground text-center py-8">
                 {t("calendar.noTasksOnDate")}
@@ -218,6 +236,31 @@ const Calendar = () => {
           )}
         </CardContent>
       </Card>
+
+      <Dialog open={isTaskDialogOpen} onOpenChange={setIsTaskDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{t("tasks.createTask")}</DialogTitle>
+          </DialogHeader>
+          <TaskForm
+            initialDate={selectedDate}
+            onSuccess={() => {
+              setIsTaskDialogOpen(false);
+              fetchTasks();
+            }}
+            onCancel={() => setIsTaskDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+
+      <ProjectDialog
+        open={isProjectDialogOpen}
+        onOpenChange={setIsProjectDialogOpen}
+        initialDate={selectedDate}
+        onSuccess={() => {
+          setIsProjectDialogOpen(false);
+        }}
+      />
     </div>
   );
 };
